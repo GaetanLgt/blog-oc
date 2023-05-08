@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Articles
+{% endblock %}
+
+{% block body %}
+	<h1>Articles</h1>
+    <div class="container">
+	<form class="row g-3" method="post">
+		<div class="col-md-6">
+			<label for="title" class="form-label">Titre</label>
+			<input type="text" class="form-control" id="title" name="title">
+		</div>
+		<div class="col-md-6">
+			<label for="chapo" class="form-label">chapo</label>
+			<input type="text" class="form-control" id="chapo" name="chapo">
+		</div>
+		<div class="col-md-6">
+			<label for="author" class="form-label">Auteur</label>
+			<input type="text" class="form-control" id="author" name="author">
+		</div>
+		<div class="col-md-6">
+			<label for="image" class="form-label">Images</label>
+			<input type="text" class="form-control" id="image" name="image">
+		</div>
+		<div class="col-12">
+			<label for="content" class="form-label">Message</label>
+			<textarea type="text" class="form-control" id="content" name="content" placeholder="Votre message"></textarea>
+		</div>
+		<div class="col-12">
+			<button type="submit" class="btn btn-primary">Sign in</button>
+		</div>
+	</form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+
+{% endblock %}

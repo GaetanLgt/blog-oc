@@ -1,0 +1,19 @@
+{
+    "name": "neosp/blog_php",
+    "autoload": {
+        "psr-4": {
+            "App\\": "Src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Langlet Gaëtan",
+            "email": "gtn.langlet@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+        "twig/twig": "^3.6",
+        "symfony/routing": "^6.2"
+    }
+}
