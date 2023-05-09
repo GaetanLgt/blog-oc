@@ -163,9 +163,7 @@ class Article
      */ 
     public function setPublishedAt($is_published)
     {
-        $this->is_published = date('now');
-        var_dump($this->is_published);
-        die();
+        $this->is_published = $is_published;
         return $this;
     }
 
@@ -177,15 +175,4 @@ class Article
         return $this->published_at;
     }
 
-    /**
-     * Set the value of published_at
-     *
-     * @return  self
-     */ 
-    public function setPublished_at($published_at)
-    {
-        $this->published_at = $published_at;
-
-        return $this;
-    }
 }
