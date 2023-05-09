@@ -5,9 +5,14 @@
 {% endblock %}
 
 {% block body %}
+{{ dump(article) }}
 <div class="container">
+{% if article.image %}
+	<img src="Assets/images/{{ article.image }}" alt="{{ article.title }}" class="img-fluid">
+	
+{% endif %}
 <h1>{{ article.title }}</h1>
-	<p class="text-muted">écrit par {{ article.author }} le {{ article.publishedAt}}</p>
+	<p class="text-muted">écrit par {{ article.author }} le {{ article.publishedAt| date("d M Y H:i:sA", "Europe/Paris") }}</p>
     <div class="container">
 	<p>{{ article.content }}</p>
 </div>

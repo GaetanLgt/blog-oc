@@ -28,15 +28,14 @@
       </ul>
       <div id="auth">
         {% if session.user %}
-          <a href="/logout">Logout</a>
+          <a class="btn btn-warning" href="/logout">Logout</a>
         {% else %}
-          <a href="/login">Login</a>
+          <a class="btn btn-success" href="/login">Login</a>
         {% endif %}
       </div>
     </div>
   </div>
 </nav>
-{{ dump(session) }}
     {% block body %}{% endblock %}
 
     {% block javascripts %}{% endblock %}
