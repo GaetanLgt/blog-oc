@@ -8,4 +8,15 @@ class Response
     {
         http_response_code($code);
     }
+
+    public function getStatusCode()
+    {
+        return http_response_code();
+    }
+
+    public function redirect($route)
+    {
+        header('Location: ' . $route);
+    }
+
 }

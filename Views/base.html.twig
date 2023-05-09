@@ -26,9 +26,13 @@
           <a class="nav-link" href="/ajouter">Ajouter</a>
         </li>
       </ul>
-      <span class="navbar-text">
-        Navbar text with an inline element
-      </span>
+      <div id="auth">
+        {% if app.user %}
+          <a href="/logout">Logout</a>
+        {% else %}
+          <a href="/login">Login</a>
+        {% endif %}
+      </div>
     </div>
   </div>
 </nav>

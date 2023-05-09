@@ -21,7 +21,9 @@ class Article
         $this->content = $content;
         $this->image = $image;
         $this->author = $author;
-        $this->published_at = $published_at;
+        $this->is_published = false;
+        $this->published_at = date('Y-m-d H:i:s');
+
     }
 
     

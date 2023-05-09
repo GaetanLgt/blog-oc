@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - {{ 'title.user' }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.user' }}</h1>
+
+    <table class=\"table\">
+        <tbody>
+            <tr>
+                <th>{{ 'label.id' }}</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.username' }}</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.email' }}</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.roles' }}</th>
+                <td>{{ user.roles|join(', ') }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.createdAt' }}</th>
+                <td>{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label.updatedAt' }}</th>
+                <td>{{ user.updatedAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
