@@ -27,7 +27,7 @@
         </li>
       </ul>
       <div id="auth">
-        {% if app.user %}
+        {% if session.user %}
           <a href="/logout">Logout</a>
         {% else %}
           <a href="/login">Login</a>
@@ -36,6 +36,7 @@
     </div>
   </div>
 </nav>
+{{ dump(session) }}
     {% block body %}{% endblock %}
 
     {% block javascripts %}{% endblock %}

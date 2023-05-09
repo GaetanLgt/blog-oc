@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Core\Request;
 use App\Models\Article;
 use App\Core\Controller;
+use App\Core\Application;
 use App\Repository\ArticleRepository;
 
 class ArticlesController extends Controller
@@ -47,7 +48,7 @@ class ArticlesController extends Controller
             );
             $this->articleRepository = new ArticleRepository();
             $this->articleRepository->create($article);
-            header('Location: /articles');
+            Application::$app->response->redirect('/articles');
         }
 
         return $this->twig->display('Articles/add.html.twig');
@@ -58,6 +59,6 @@ class ArticlesController extends Controller
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $this->articleRepository->delete($id);
-        header('Location: /articles');
+        Application::$app->response->redirect('/articles');
     }
 }

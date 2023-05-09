@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DateTime;
 use App\Core\Database;
+use App\Core\Application;
 
 class User
 {
@@ -11,14 +12,14 @@ class User
     public string $username;
     public string $password;
     public string $email;
-    private array $role;
-    private DateTime $created_at;
-    private Datetime $updated_at;
+    public string $role;
+    private $created_at;
+    private $updated_at;
 
     public function __construct()
     {
-        $this->created_at = date('Y-m-d H:i:s');
-        $this->updated_at = date('Y-m-d H:i:s');
+        $this->created_at = new Datetime(date('Y-m-d H:i:s'));
+        $this->updated_at = new Datetime(date('Y-m-d H:i:s'));
     }
 
     public function login()
@@ -32,15 +33,16 @@ class User
         if ($user) {
             if (password_verify($this->password, $user['password'])) {
                 session_start();
-                $_SESSION['user']['profil'] = $user->username . $user->role;
-                header('Location: /Articles');
+                Application::$app->session->set('user', $user);
+                Application::$app->response->redirect('/articles');
+
             } else {
                 $_SESSION['error'] = "Utilisateur inexistant ou mot de passe incorrect";
-                header('Location: /Login');
+                Application::$app->response->redirect('/login');
             }
         } else {
             $_SESSION['error'] = "Utilisateur inexistant ou mot de passe incorrect";
-            header('Location: /Login');
+            Application::$app->response->redirect('/login');
         }
         //header('Location: /Articles');
     }
@@ -50,18 +52,8 @@ class User
         session_start();
         unset($_SESSION['user']);
         session_destroy();
-        header('Location: /Articles');
-    }
+        Application::$app->response->redirect('/articles');
 
-    public static function where($column, $value)
-    {
-        $db = Database::getInstance();
-        $sql = "SELECT * FROM users WHERE $column = :$column";
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(":$column", $value);
-        $stmt->execute();
-        $user = $stmt->fetchObject('App\Core\User');
-        return $user;
     }
 
     public function save()
@@ -69,23 +61,15 @@ class User
         $db = Database::getInstance();
         $sql = "INSERT INTO users (username, password, email, role, created_at, updated_at) VALUES (:username, :password, :email, :role, :created_at, :updated_at)";
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':username', $this->username);
-        $stmt->bindValue(':password', password_hash($this->password, PASSWORD_DEFAULT));
-        $stmt->bindValue(':email', $this->email);
-        $stmt->bindValue(':role', $this->role);
-        $stmt->bindValue(':created_at', $this->created_at);
-        $stmt->bindValue(':updated_at', $this->updated_at);
-        $stmt->execute();
-    }
+        $stmt->bindValue(':username', $_POST['username']);
+        $stmt->bindValue(':password', password_hash($_POST['password'], PASSWORD_DEFAULT));
+        $stmt->bindValue(':email', $_POST['email']);
+        $stmt->bindValue(':role', 'user');
+        $stmt->bindValue(':created_at', date('Y-m-d H:i:s'));
+        $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'));
 
-    public static function first()
-    {
-        $db = Database::getInstance();
-        $sql = "SELECT * FROM users LIMIT 1";
-        $stmt = $db->prepare($sql);
+        
         $stmt->execute();
-        $user = $stmt->fetchObject('App\Core\User');
-        return $user; 
     }
     /**
      * Get the value of id

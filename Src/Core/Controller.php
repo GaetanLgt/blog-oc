@@ -17,7 +17,10 @@ class Controller
         // on instancie l'environnement twig
         $this->twig = new Environment($this->loader, [
             'cache' => false,
+            'debug' => true,
         ]);
+        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+        $this->twig->addGlobal('session', $_SESSION);
     }
 
     public function renderView($view, $parameters = [])
