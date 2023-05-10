@@ -30,4 +30,8 @@ $app->router->post('/modifier', [ArticlesController::class, 'modifier']);
 $app->router->get('/comment', [CommentController::class, 'add']);
 $app->router->post('/comment', [CommentController::class, 'add']);
 
+$app->router->get('/publier', [ArticlesController::class, 'publish']);
+
+$app->router->get('/depublier', [ArticlesController::class, 'unpublish']);
+
 $app->router->get('/profil', [ProfileController::class, 'index']);

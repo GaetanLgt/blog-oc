@@ -42,10 +42,9 @@ class ArticlesController extends Controller
     public function add()
     {
         $this->articleRepository = new ArticleRepository();
-        var_dump($_POST);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $article = new Article(
-                $_POST['id'],
+                0,
                 $_POST['title'],
                 $_POST['chapo'],
                 $_POST['content'],
@@ -60,9 +59,8 @@ class ArticlesController extends Controller
             }
             if (isset($_POST['is_published']) && $_POST['is_published'] == true ) {
                 $id = $this->articleRepository->getLastInsertedId();
-                $this->articleRepository->setIsPublished($id ,1);
+                $this->articleRepository->setIsPublished($id);
             }
-            var_dump($article);
             Application::$app->response->redirect('/articles');
         }
 
@@ -103,6 +101,7 @@ class ArticlesController extends Controller
             $article->setImage($image);
             $article->setContent($_POST['content']);
             $article->setAuthor($_POST['author']);
+            $this->articleRepository->setIsPublished($id,$_POST['is_published']);
             $this->articleRepository->update($article->getId());
             Application::$app->response->redirect('/articles');
         }
@@ -113,20 +112,17 @@ class ArticlesController extends Controller
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
-        $article = $this->articleRepository->findById($id);
-        $article->setPublishedAt(date('now'));
-        $this->articleRepository->setIsPublished($id,true);
-        $this->articleRepository->update($article->getId());
-        Application::$app->response->redirect('/articles');
+        $_POST['is_published'] = true;
+        $this->articleRepository->update($id);
+        Application::$app->response->redirect('/article?id=' . $id . '');
     }
 
     public function unpublish()
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
-        $article = $this->articleRepository->findById($id);
-        $this->articleRepository->setIsPublished($id,false);
-        $this->articleRepository->update($article->getId());
+        $_POST['is_published'] = false;
+        $this->articleRepository->update($id);
         Application::$app->response->redirect('/articles');
     }
 
@@ -135,7 +131,7 @@ class ArticlesController extends Controller
         
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
-        $this->articleRepository->findById($id);
-        $this->articleRepository->setIsPublished($id, $isPublished);
+        $article = $this->articleRepository->findById($id);
+        $article->setIsPublished($isPublished);
     }
 }

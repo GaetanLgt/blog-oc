@@ -13,9 +13,13 @@
 				<h5 class="card-title">{{ article.title }}</h5>
 				<p class="card-text">{{ article.content }}</p>
 				<a href="/article?id={{ article.id }}" class="btn btn-primary">Read more</a>
-				<a href="modifier?id={{ article.id }}" class="card-link btn btn-warning">Modifier</a>
-				<a href="supprimer?id={{ article.id }}" class="card-link btn btn-danger">Delete</a>
-
+				<a href="/modifier?id={{ article.id }}" class="card-link btn btn-warning">Modifier</a>
+				<a href="/supprimer?id={{ article.id }}" class="card-link btn btn-danger">Delete</a>
+				{% if article.isPublished != true %}
+					<a href="/publier?id={{ article.id }}" class="card-link btn btn-success">Publish</a>
+				{% elseif article.isPublished == true %}
+					<a href="/depublier?id={{ article.id }}" class="card-link btn btn-secondary">Unpublish</a>
+				{% endif %}
 			</div>
 		</div>
 	{% else %}

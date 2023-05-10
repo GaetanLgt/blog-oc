@@ -21,7 +21,7 @@ class Article
         $this->content = $content;
         $this->image = $image;
         $this->author = $author;
-        $this->is_published = false;
+        $this->is_published = $is_published ?? false;
         $this->published_at = date('Y-m-d H:i:s');
 
     }
@@ -175,4 +175,15 @@ class Article
         return $this->published_at;
     }
 
+    /**
+     * Set the value of is_published
+     *
+     * @return  self
+     */ 
+    public function setIspublished($is_published)
+    {
+        $this->is_published = $is_published;
+
+        return $this;
+    }
 }

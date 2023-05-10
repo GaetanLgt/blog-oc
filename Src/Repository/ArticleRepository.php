@@ -45,7 +45,7 @@ class ArticleRepository
             $data['content'],
             $data['image'] ?? null,
             $data['author'],
-            $data['is_published'],
+            $data['is_published'] ?? false,
             $data['published_at']
         );
     }
@@ -59,7 +59,6 @@ class ArticleRepository
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
             $images = $this->setImage();
         }
-        var_dump($_POST['is_published']);
 
         $stmt->execute([
             'title' => $_POST['title'],
@@ -81,19 +80,83 @@ class ArticleRepository
 
     public function update(int $id)
     {
+        /*on récupe l'article à modifier*/
+        $article = $this->findById($id);
+        /*on vérifie si l'article existe*/
+        if (!$article) {
+            throw new Exception('Article not found');
+        }
+        /*on vérifie si le titre est bien rempli*/
+        if(isset($_POST['title'])){
+            $title = $_POST['title'];
+        } else {
+            /* on récupère le titre de l'article*/
+            $title = $article->getTitle();
+        }
+        /*on vérifie si le chapo est bien rempli*/
+        if(isset($_POST['chapo'])){
+            $chapo = $_POST['chapo'];
+        } else {
+            /* on récupère le chapo de l'article*/
+            $chapo = $article->getChapo();
+        }
+        /*on vérifie si le contenu est bien rempli*/
+        if(isset($_POST['content'])){
+            $content = $_POST['content'];
+        } else {
+            /* on récupère le contenu de l'article*/
+            $content = $article->getContent();
+        }
+        /*on vérifie si l'image est bien rempli*/
+        if(isset($_POST['image'])){
+            $image = $_POST['image'];
+        } else {
+            /* on récupère l'image de l'article*/
+            $image = $article->getImage();
+        }
+        /*on vérifie si l'auteur est bien rempli*/
+        if(isset($_POST['author'])){
+            $author = $_POST['author'];
+        } else {
+            /* on récupère l'auteur de l'article*/
+            $author = $article->getAuthor();
+        }
+        /*on vérifie si la publication est bien rempli*/
+        if(isset($_POST['is_published'])){
+            $is_published = $_POST['is_published'];
+        } else {
+            /* on récupère la publication de l'article*/
+            $is_published = $article->getIsPublished();
+        }
+        /*on vérifie si la date de publication est bien rempli*/
+        if(isset($_POST['published_at'])){
+            $published_at = $_POST['published_at'];
+        } else {
+            /* on récupère la date de publication de l'article*/
+            $published_at = $article->getPublishedAt();
+        }
+        /*on vérifie si l'image est bien rempli*/
+        if(isset($_FILES['image'])){
+            $images = $_FILES['image']['name'];
+        } else {
+            /* on récupère l'image de l'article*/
+            $images = $article->getImage();
+        }
         $db = Database::getInstance();
-        $stmt = $db->prepare('UPDATE articles SET title = :title, chapo = :chapo, content = :content, image = :image, author = :author, is_published = :is_published WHERE id = :id');
+        $stmt = $db->prepare('UPDATE articles SET id = :id, title = :title, chapo = :chapo, content = :content, image = :image, author = :author, is_published = :is_published, published_at = :published_at  WHERE id = :id');
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
             $images = $this->setImage();
         }
         $stmt->execute([
             'id' => $id,
-            'title' => $_POST['title'],
-            'chapo' => $_POST['chapo'],
-            'content' => $_POST['content'],
-            'image' => $_POST['image'] ?? '',
-            'author' => $_POST['author'],
-            'is_published' => $_POST['is_published'] ?? 0,
+            'title' => $title,
+            'chapo' => $chapo,
+            'content' => $content,
+            'image' => $images ?? '',
+            'author' => $author,
+            'is_published' => $is_published,
+            'published_at' => $published_at
+
         ]);
     }
 
@@ -191,12 +254,12 @@ class ArticleRepository
         ]);
     }
 
-    public function setIsPublished($id, $isPublished)
+    public function setIsPublished($id)
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('UPDATE articles SET is_published = :is_published WHERE id = :id');
         $stmt->bindValue(':id', $id);
-        $stmt->bindValue(':is_published', $isPublished);
+        $stmt->bindValue(':is_published', true);
         $stmt->execute();
     }
 
