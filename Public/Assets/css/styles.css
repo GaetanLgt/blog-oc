@@ -1,0 +1,57 @@
+body{
+    background-color: #f8f9fa !important;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #292b2c;
+}
+
+.card {
+    margin-bottom: 30px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    background-color: #fff;
+}
+
+/* decoration de la navbar en style css  */
+.navbar {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    border-radius: 0;
+    color: #292b2c;
+    margin-bottom: 30px;
+}
+
+.navbar .navbar-brand {
+    color: #292b2c;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.navbar .navbar-brand span {
+    color: #007bff;
+}
+
+.navbar .navbar-nav .nav-item .nav-link {
+    color: #292b2c;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 10px 15px;
+}
+
+.navbar .navbar-nav .nav-item .nav-link:hover {
+    color: #007bff;
+}
+
+/* animation au survol du li avec animation d'un souligné sous les elements de la nav item de gauche à droite */
+.nav-item:hover::after {
+    content: '';
+    display: block;
+    border-bottom: 3px solid lightblue;
+    width: 100%;
+    transform: scaleX(1);
+    transition: transform 250ms ease-in-out;
+}

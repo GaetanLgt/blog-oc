@@ -15,7 +15,7 @@ class ArticlesController extends Controller
     public function index()
     {
         $this->articleRepository = new ArticleRepository();
-        $articles = $this->articleRepository->findAll();
+        $articles = $this->articleRepository->getPublishedArticles();
         return $this->twig->display('Articles/index.html.twig', ['articles' => $articles]);
     }
 
@@ -41,18 +41,28 @@ class ArticlesController extends Controller
 
     public function add()
     {
+        $this->articleRepository = new ArticleRepository();
+        var_dump($_POST);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $article = new Article(
-                0,
+                $_POST['id'],
                 $_POST['title'],
                 $_POST['chapo'],
                 $_POST['content'],
-                null,
+                $_POST['image'] ?? '',
                 $_POST['author'],
-                date('now')
+                intval($_POST['is_published']),
+                date('Y-m-d H:i:s') // Utilisez 'Y-m-d H:i:s' pour obtenir le format correct de la date
             );
-            $this->articleRepository = new ArticleRepository();
-            $this->articleRepository->create($article);
+            $this->articleRepository->create();
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+                $this->articleRepository->setImage();
+            }
+            if (isset($_POST['is_published']) && $_POST['is_published'] == true ) {
+                $id = $this->articleRepository->getLastInsertedId();
+                $this->articleRepository->setIsPublished($id ,1);
+            }
+            var_dump($article);
             Application::$app->response->redirect('/articles');
         }
 
@@ -61,8 +71,22 @@ class ArticlesController extends Controller
 
     public function supprimer()
     {
+        if (!isset($_SESSION['username'])) {
+            Application::$app->response->redirect('/login');
+            exit;
+        }
+        if (!isset($_GET['id'])) {
+            Application::$app->response->redirect('/articles');
+            exit;
+        }
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
+        $article = $this->articleRepository->findById($id);
+        $author = $article->getAuthor();
+        if ($author != $_SESSION['username'] OR $_SESSION['role'] !== 'admin') {
+            Application::$app->response->redirect('/profil');
+            exit;
+        }
         $this->articleRepository->delete($id);
         Application::$app->response->redirect('/articles');
     }
@@ -91,7 +115,7 @@ class ArticlesController extends Controller
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);
         $article->setPublishedAt(date('now'));
-        $this->articleRepository->setIsPublished(true);
+        $this->articleRepository->setIsPublished($id,true);
         $this->articleRepository->update($article->getId());
         Application::$app->response->redirect('/articles');
     }
@@ -101,7 +125,7 @@ class ArticlesController extends Controller
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);
-        $this->articleRepository->setIsPublished(false);
+        $this->articleRepository->setIsPublished($id,false);
         $this->articleRepository->update($article->getId());
         Application::$app->response->redirect('/articles');
     }
@@ -111,7 +135,7 @@ class ArticlesController extends Controller
         
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
-        $article = $this->articleRepository->findById($id);
-        $this->articleRepository->setIsPublished(false);
+        $this->articleRepository->findById($id);
+        $this->articleRepository->setIsPublished($id, $isPublished);
     }
 }

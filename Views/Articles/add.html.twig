@@ -8,6 +8,8 @@
 	<h1>Articles</h1>
     <div class="container">
 	<form class="row g-3" method="post" enctype="multipart/form-data">
+			<label for="author" class="form-label text-muted">Auteur : {{ session.username }}</label>
+			<input type="text" class="form-control invisible" id="author" name="author" value="{{ session.username }}" >
 		<div class="col-md-6">
 			<label for="title" class="form-label">Titre</label>
 			<input type="text" class="form-control" id="title" name="title">
@@ -17,8 +19,11 @@
 			<input type="text" class="form-control" id="chapo" name="chapo">
 		</div>
 		<div class="col-md-6">
-			<label for="author" class="form-label text-muted">Auteur : {{ session.username }}</label>
-			<input type="text" class="form-control invisible" id="author" name="author" value="{{ session.username }}" >
+			<label for="is_published" class="form-label">Publier ?</label>
+			<select id="is_published" name="is_published" class="form-select">
+				<option value="false" selected>Non</option>
+				<option value="true">Oui</option>
+			</select>
 		</div>
 		<div class="col-md-6">
 			<label for="image" class="form-label">Images</label>

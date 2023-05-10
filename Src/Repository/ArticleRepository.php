@@ -45,6 +45,7 @@ class ArticleRepository
             $data['content'],
             $data['image'] ?? null,
             $data['author'],
+            $data['is_published'],
             $data['published_at']
         );
     }
@@ -54,15 +55,18 @@ class ArticleRepository
 
         $date = date('Y-m-d H:i:s');
         $db = Database::getInstance();
-        $stmt = $db->prepare('INSERT INTO articles (title, chapo, content, image, author, published_at) VALUES (:title, :chapo, :content, :image, :author, :published_at)');
+        $stmt = $db->prepare('INSERT INTO articles (title, chapo, content, image, author, is_published, published_at) VALUES (:title, :chapo, :content, :image, :author,:is_published, :published_at)');
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
             $images = $this->setImage();
         }
+        var_dump($_POST['is_published']);
+
         $stmt->execute([
             'title' => $_POST['title'],
             'chapo' => $_POST['chapo'],
             'content' => $_POST['content'],
             'image' => $images ?? '',
+            'is_published' => $_POST['is_published'] ?? false,
             'author' => $_POST['author'],
             'published_at' => $date
         ]);
@@ -78,7 +82,7 @@ class ArticleRepository
     public function update(int $id)
     {
         $db = Database::getInstance();
-        $stmt = $db->prepare('UPDATE articles SET title = :title, chapo = :chapo, content = :content, image = :image, author = :author WHERE id = :id');
+        $stmt = $db->prepare('UPDATE articles SET title = :title, chapo = :chapo, content = :content, image = :image, author = :author, is_published = :is_published WHERE id = :id');
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
             $images = $this->setImage();
         }
@@ -87,24 +91,33 @@ class ArticleRepository
             'title' => $_POST['title'],
             'chapo' => $_POST['chapo'],
             'content' => $_POST['content'],
-            'image' => $images,
-            'author' => $_POST['author']
+            'image' => $_POST['image'] ?? '',
+            'author' => $_POST['author'],
+            'is_published' => $_POST['is_published'] ?? 0,
         ]);
+    }
+
+    public function getLastInsertedId()
+    {
+        $db = Database::getInstance();
+        $stmt = $db->prepare('SELECT id FROM articles ORDER BY id DESC LIMIT 1');
+        $stmt->execute();
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $data['id'];
     }
 
     public function setImage()
     {
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
             $images = $_FILES['image']['name'];
-        
-        $images = $_FILES['image']['name'];
-        $tmpName = $_FILES['image']['tmp_name'];
-        move_uploaded_file($tmpName, 'Assets/images/' . $images);
-        return $images;
-    } else {
-        return null;
-    }
 
+            $images = $_FILES['image']['name'];
+            $tmpName = $_FILES['image']['tmp_name'];
+            move_uploaded_file($tmpName, 'Assets/images/' . $images);
+            return $images;
+        } else {
+            return null;
+        }
     }
 
     public function getArticlesComments($articleId)
@@ -119,7 +132,7 @@ class ArticleRepository
         }
         return $comments;
     }
-    
+
     private function hydrateComment(array $data): Comment
     {
         return new Comment(
@@ -176,17 +189,15 @@ class ArticleRepository
             'updated_at' => date('Y-m-d H:i:s'),
             'article_id' => $articleId
         ]);
-
     }
 
-    public function setIsPublished()
+    public function setIsPublished($id, $isPublished)
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('UPDATE articles SET is_published = :is_published WHERE id = :id');
-        $stmt->execute([
-            'id' => $_GET['id'],
-            'is_published' => 1
-        ]);
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':is_published', $isPublished);
+        $stmt->execute();
     }
 
     public function getPublishedArticles()
@@ -194,6 +205,19 @@ class ArticleRepository
         $db = Database::getInstance();
         $stmt = $db->prepare('SELECT * FROM articles WHERE is_published = :is_published');
         $stmt->execute(['is_published' => 1]);
+        $articlesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $articles = [];
+        foreach ($articlesData as $data) {
+            $articles[] = $this->hydrate($data);
+        }
+        return $articles;
+    }
+
+    public function findBy($key, $value)
+    {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM articles WHERE $key = :$key");
+        $stmt->execute([$key => $value]);
         $articlesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $articles = [];
         foreach ($articlesData as $data) {

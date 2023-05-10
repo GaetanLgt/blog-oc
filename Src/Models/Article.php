@@ -13,9 +13,9 @@ class Article
     private bool $is_published;
     private string $published_at;
 
-    public function __construct(int $id, string $title, string $chapo, string $content, ?string $image, string $author, string $published_at)
+    public function __construct(int $id, string $title, string $chapo, string $content, ?string $image, string $author,bool $is_published, string $published_at)
     {
-        $this->id = $id;
+        $this->id = $id ?? 0;
         $this->title = $title;
         $this->chapo = $chapo;
         $this->content = $content;
@@ -151,7 +151,7 @@ class Article
     /**
      * Get the value of is_published
      */ 
-    public function getIs_published()
+    public function getIsPublished()
     {
         return $this->is_published;
     }

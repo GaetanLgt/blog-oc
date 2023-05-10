@@ -25,6 +25,7 @@ class CommentController extends Controller
                 $_POST['content'],
                 intval($id) // Convertir en entier
             );
+            $comment->setAuthor($_SESSION['username']);
             $this->commentRepository->save($comment);
             Application::$app->response->redirect('/articles');
         }

@@ -76,7 +76,7 @@ class Comment
      */ 
     public function setAuthor($author)
     {
-        $author = $_SESSION['user']['username'];
+        $author = $_SESSION['username'];
         $this->author = $author;
         return $this;
     }

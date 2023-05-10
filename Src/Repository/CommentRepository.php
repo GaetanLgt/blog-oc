@@ -31,8 +31,6 @@ class CommentRepository
         foreach ($commentsData as $data) {
             $comments[] = $this->hydrate($data);
         }
-        var_dump($comments);
-        die();
         return $comments;
     }
 

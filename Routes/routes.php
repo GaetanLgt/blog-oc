@@ -2,6 +2,7 @@
 use App\Controller\AuthController;
 use App\Controller\HomeController;
 use App\Controller\CommentController;
+use App\Controller\ProfileController;
 use App\Controller\ArticlesController;
 
 $app->router->get('/', [HomeController::class, 'index']);
@@ -29,4 +30,4 @@ $app->router->post('/modifier', [ArticlesController::class, 'modifier']);
 $app->router->get('/comment', [CommentController::class, 'add']);
 $app->router->post('/comment', [CommentController::class, 'add']);
 
-$app->router->get('/supprimer', [CommentController::class, 'supprimer']);
+$app->router->get('/profil', [ProfileController::class, 'index']);
