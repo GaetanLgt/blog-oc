@@ -44,7 +44,6 @@ class User
             $_SESSION['error'] = "Utilisateur inexistant ou mot de passe incorrect";
             Application::$app->response->redirect('/login');
         }
-        //header('Location: /Articles');
     }
 
     public function lougout(): void
@@ -53,7 +52,6 @@ class User
         unset($_SESSION['user']);
         session_destroy();
         Application::$app->response->redirect('/articles');
-
     }
 
     public function save(): void
