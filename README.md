@@ -47,25 +47,16 @@ composer install
 
 4. Configurez les paramètres de connexion à la base de données dans le fichier `.env`.
 
-5. Créez la base de données en exécutant la commande suivante :
+5. Créez la base de données avec le fichier de migration Migrations/migate001.sql
+
+6. Lancez le serveur web :
 
 ```bash
-php bin/console doctrine:database:create
+cd public 
+php -S localhost:8000
 ```
 
-6. Appliquez les migrations pour créer les tables de la base de données :
-
-```bash
-php bin/console doctrine:migrations:migrate
-```
-
-7. Lancez le serveur de développement Symfony :
-
-```bash
-symfony serve
-```
-
-8. Accédez à l'application dans votre navigateur à l'adresse suivante :
+7. Accédez à l'application dans votre navigateur à l'adresse suivante :
 
 ```
 http://localhost:8000
