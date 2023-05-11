@@ -20,7 +20,6 @@ class ProfileController extends Controller
     {
         if (!isset($_SESSION['username'])) {
             Application::$app->response->redirect('/login');
-            exit;
         }
     }
 }

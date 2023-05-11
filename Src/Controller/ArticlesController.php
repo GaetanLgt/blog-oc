@@ -72,11 +72,10 @@ class ArticlesController extends Controller
     {
         if (!isset($_SESSION['username'])) {
             Application::$app->response->redirect('/login');
-            exit;
+
         }
         if (!isset($_GET['id'])) {
             Application::$app->response->redirect('/articles');
-            exit;
         }
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
@@ -84,7 +83,7 @@ class ArticlesController extends Controller
         $author = $article->getAuthor();
         if ($author != $_SESSION['username'] OR $_SESSION['role'] !== 'admin') {
             Application::$app->response->redirect('/profil');
-            exit;
+
         }
         $this->articleRepository->delete($id);
         Application::$app->response->redirect('/articles');
