@@ -24,9 +24,9 @@ class CommentController extends Controller
             $comment = new Comment(
                 0,
                 $_POST['content'],
-                $_SESSION['username'], // Utilisez 'Y-m-d H:i:s' pour obtenir le format correct de la date
-                date('Y-m-d H:i:s'),
-                intval($id) // Convertir en entier
+                $_POST['author'],
+                date('Y-m-d H:i:s'), // Utilisez 'Y-m-d H:i:s' pour obtenir le format correct de la date
+                $id
             );
             $this->commentRepository->save($comment);
             Application::$app->response->redirect('/articles');
