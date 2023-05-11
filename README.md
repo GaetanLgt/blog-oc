@@ -49,7 +49,7 @@ composer install
 6. Lancez le serveur web :
 
 ```bash
-cd public 
+cd public
 php -S localhost:8000
 ```
 
@@ -78,3 +78,4 @@ Ce projet a été réalisé par GaetanLgt, dans le cadre de la formation Opencla
 ## License
 
 Ce projet est sous license [MIT](LICENSE).
+
