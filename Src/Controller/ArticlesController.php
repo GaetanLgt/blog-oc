@@ -58,11 +58,11 @@ class ArticlesController extends Controller
             if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
                 $this->articleRepository->setImage();
             }
-            if (isset($_POST['is_published']) == true && $_POST['is_published'] == true ) {
+            if (isset($_POST['is_published']) && $_POST['is_published'] === true) {
                 $id = $this->articleRepository->getLastInsertedId();
                 $this->articleRepository->setIsPublished($id);
             }
-            Application::$app->response->redirect('/articles');
+            Application::$app->response->redirect('/articles');            
         }
 
         return $this->twig->display('Articles/add.html.twig');
