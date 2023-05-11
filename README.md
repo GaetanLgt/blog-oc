@@ -12,9 +12,6 @@ Ce projet est un blog réalisé dans le cadre de la formation de développeur d'
 - Création, affichage, édition et suppression d'articles de blog.
 - Ajout de commentaires sur les articles.
 - Gestion des utilisateurs avec des rôles (administrateur, utilisateur).
-- Interface d'administration pour la gestion des articles et des utilisateurs.
-- Recherche d'articles par catégorie ou par mots-clés.
-- Pagination des articles pour une meilleure navigation.
 
 ## Prérequis
 
