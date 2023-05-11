@@ -58,7 +58,7 @@ class ArticlesController extends Controller
             if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
                 $this->articleRepository->setImage();
             }
-            if (isset($_POST['is_published']) && $_POST['is_published'] == true ) {
+            if (isset($_POST['is_published']) == true && $_POST['is_published'] == true ) {
                 $id = $this->articleRepository->getLastInsertedId();
                 $this->articleRepository->setIsPublished($id);
             }
@@ -81,7 +81,7 @@ class ArticlesController extends Controller
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);
         $author = $article->getAuthor();
-        if ($author != $_SESSION['username'] OR $_SESSION['role'] !== 'admin') {
+        if ($author != $_SESSION['username'] || $_SESSION['role'] !== 'admin') {
             Application::$app->response->redirect('/profil');
 
         }
