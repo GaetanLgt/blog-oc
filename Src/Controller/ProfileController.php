@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Core\Controller;
 use App\Core\Application;
+use App\Core\Response;
 use App\Repository\ArticleRepository;
 
 class ProfileController extends Controller
 {
-    public function index(): void
+    public function index()
     {
         $this->checkAccess();
         $articleRepository = new ArticleRepository();

@@ -13,14 +13,14 @@ class ArticlesController extends Controller
 {
     private $articleRepository;
 
-    public function index(): void
+    public function index()
     {
         $this->articleRepository = new ArticleRepository();
         $articles = $this->articleRepository->getPublishedArticles();
         return $this->twig->display('Articles/index.html.twig', ['articles' => $articles]);
     }
 
-    public function show(): void
+    public function show()
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
@@ -40,7 +40,7 @@ class ArticlesController extends Controller
     }
     
 
-    public function add(): void
+    public function add()
     {
         $this->articleRepository = new ArticleRepository();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -89,7 +89,7 @@ class ArticlesController extends Controller
         Application::$app->response->redirect('/articles');
     }
 
-    public function modifier(): void
+    public function modifier()
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();

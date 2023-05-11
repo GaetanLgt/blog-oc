@@ -57,7 +57,7 @@ class CommentRepository
         );
     }
 
-    public function update(): void
+    public function update()
     {
         $db = Database::getInstance();
         $sql = "UPDATE comments SET content = :content, author = :author, updated_at = :updated_at WHERE id = :id";
@@ -70,7 +70,7 @@ class CommentRepository
         return $stmt->fetch();
     }
 
-    public function delete(int $id): void
+    public function delete(int $id)
     {
         $db = Database::getInstance();
         $sql = "DELETE FROM comments WHERE id = :id";

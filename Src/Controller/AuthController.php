@@ -6,21 +6,22 @@ use App\Models\User;
 use App\Core\Request;
 use App\Core\Controller;
 use App\Core\Application;
+use App\Core\Response;
 use App\Repository\UserRepository;
 
 class AuthController extends Controller
 {
-    public function login(): void
+    public function login()
     {
         return $this->renderView('Auth/login.html.twig');
     }
 
-    public function register(): void
+    public function register()
     {
         return $this->renderView('Auth/register.html.twig');
     }
 
-    public function handleLogin(): void
+    public function handleLogin()
     {
         
         $email = $_POST['email'];
@@ -42,7 +43,7 @@ class AuthController extends Controller
         Application::$app->response->redirect('/');
     }
 
-    public function handleRegister(): void
+    public function handleRegister()
     {
         foreach ($_POST as $key => $value) {
             $_POST[$key] = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -84,7 +85,7 @@ class AuthController extends Controller
         Application::$app->response->redirect('/');
     }
 
-    public function logout(): void
+    public function logout()
     {
         unset($_SESSION['user']);
         session_destroy();

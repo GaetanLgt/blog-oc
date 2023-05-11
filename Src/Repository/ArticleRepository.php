@@ -263,7 +263,7 @@ class ArticleRepository
         $stmt->execute();
     }
 
-    public function getPublishedArticles(): array
+    public function getPublishedArticles()
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('SELECT * FROM articles WHERE is_published = :is_published');
