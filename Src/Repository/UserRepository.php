@@ -7,7 +7,7 @@ use App\Core\Database;
 
 class UserRepository
 {
-    public static function where($column, $value)
+    public static function where($column, $value): ?User
     {
         $db = Database::getInstance();
         $sql = "SELECT * FROM users WHERE $column = :$column";
@@ -18,7 +18,7 @@ class UserRepository
         return $user;
     }
 
-    public static function first()
+    public static function first(): ?User
     {
         $db = Database::getInstance();
         $sql = "SELECT * FROM users LIMIT 1";

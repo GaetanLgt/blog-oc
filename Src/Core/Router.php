@@ -17,17 +17,17 @@ class Router
         $this->response = $response;
     }
 
-    public function get($path, $callback)
+    public function get($path, $callback): void
     {
         $this->routes['get'][$path] = $callback;
     }
 
-    public function post($path, $callback)
+    public function post($path, $callback): void
     {
         $this->routes['post'][$path] = $callback;
     }
 
-    public function resolve()
+    public function resolve(): void
     {
         $path = $this->request->getPath();
         $method = $this->request->getMethod();

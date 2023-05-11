@@ -31,7 +31,7 @@ class Article
     /**
      * Get the value of id
      */ 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -41,7 +41,7 @@ class Article
      *
      * @return  self
      */ 
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 
@@ -51,7 +51,7 @@ class Article
     /**
      * Get the value of title
      */ 
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -61,7 +61,7 @@ class Article
      *
      * @return  self
      */ 
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -71,7 +71,7 @@ class Article
     /**
      * Get the value of chapo
      */ 
-    public function getChapo()
+    public function getChapo(): string
     {
         return $this->chapo;
     }
@@ -81,7 +81,7 @@ class Article
      *
      * @return  self
      */ 
-    public function setChapo($chapo)
+    public function setChapo($chapo): self
     {
         $this->chapo = $chapo;
 
@@ -91,7 +91,7 @@ class Article
     /**
      * Get the value of content
      */ 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -101,7 +101,7 @@ class Article
      *
      * @return  self
      */ 
-    public function setContent($content)
+    public function setContent($content): self
     {
         $this->content = $content;
 
@@ -111,7 +111,7 @@ class Article
     /**
      * Get the value of image
      */ 
-    public function getImage()
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -121,7 +121,7 @@ class Article
      *
      * @return  self
      */ 
-    public function setImage($image)
+    public function setImage($image): self
     {
         $this->image = $image;
 
@@ -131,7 +131,7 @@ class Article
     /**
      * Get the value of author
      */ 
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
@@ -141,7 +141,7 @@ class Article
      *
      * @return  self
      */ 
-    public function setAuthor($author)
+    public function setAuthor($author): self
     {
         $this->author = $author;
 
@@ -151,7 +151,7 @@ class Article
     /**
      * Get the value of is_published
      */ 
-    public function getIsPublished()
+    public function getIsPublished(): bool
     {
         return $this->is_published;
     }
@@ -161,7 +161,7 @@ class Article
      *
      * @return  self
      */ 
-    public function setPublishedAt($is_published)
+    public function setPublishedAt($is_published): self
     {
         $this->is_published = $is_published;
         return $this;
@@ -170,7 +170,7 @@ class Article
     /**
      * Get the value of published_at
      */ 
-    public function getPublishedAt()
+    public function getPublishedAt(): string
     {
         return $this->published_at;
     }
@@ -180,7 +180,7 @@ class Article
      *
      * @return  self
      */ 
-    public function setIspublished($is_published)
+    public function setIspublished($is_published): self
     {
         $this->is_published = $is_published;
 

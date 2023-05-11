@@ -4,17 +4,17 @@ namespace App\Core;
 
 class Session
 {
-    public static function init()
+    public static function init(): void
     {
         session_start();
     }
 
-    public static function set($key, $value)
+    public static function set($key, $value): void
     {
         $_SESSION[$key] = $value;
     }
 
-    public static function get($key, $secondKey = false)
+    public static function get($key, $secondKey = false): bool|string
     {
         if ($secondKey == true) {
             if (isset($_SESSION[$key][$secondKey])) {
@@ -28,12 +28,15 @@ class Session
         return false;
     }
 
-    public static function destroy()
+    public static function destroy(): void
     {
+        unset($_SESSION);
+        unset($_COOKIE);
+        unset($_POST);
         session_destroy();
     }
 
-    public static function unset($key)
+    public static function unset($key): void
     {
         unset($_SESSION[$key]);
     }

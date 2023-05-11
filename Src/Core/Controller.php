@@ -23,7 +23,7 @@ class Controller
         $this->twig->addGlobal('session', $_SESSION);
     }
 
-    public function renderView($view, $parameters = [])
+    public function renderView($view, $parameters = []): void
     {
         $template = $this->twig->load($view);
         echo $template->render($parameters);

@@ -7,7 +7,7 @@ use App\Models\Comment;
 
 class CommentRepository
 {
-    public function save(Comment $comment)
+    public function save(Comment $comment): void
 {
     $db = Database::getInstance();
     $sql = "INSERT INTO comments (content, author, created_at, updated_at, article_id) VALUES (:content, :author, :created_at, :updated_at, :article_id)";
@@ -49,12 +49,15 @@ class CommentRepository
     public function hydrate(array $data): Comment
     {
         return new Comment(
+            $data['id'],
             $data['content'],
-            (int) $data['article_id']
+            $data['author'],
+            $data['updated_at'],
+            $data['article_id']
         );
     }
 
-    public function update()
+    public function update(): void
     {
         $db = Database::getInstance();
         $sql = "UPDATE comments SET content = :content, author = :author, updated_at = :updated_at WHERE id = :id";
@@ -67,7 +70,7 @@ class CommentRepository
         return $stmt->fetch();
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $db = Database::getInstance();
         $sql = "DELETE FROM comments WHERE id = :id";

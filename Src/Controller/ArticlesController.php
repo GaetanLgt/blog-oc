@@ -5,6 +5,7 @@ use App\Core\Request;
 use App\Models\Article;
 use App\Core\Controller;
 use App\Core\Application;
+use App\Core\Response;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 
@@ -12,14 +13,14 @@ class ArticlesController extends Controller
 {
     private $articleRepository;
 
-    public function index()
+    public function index(): void
     {
         $this->articleRepository = new ArticleRepository();
         $articles = $this->articleRepository->getPublishedArticles();
         return $this->twig->display('Articles/index.html.twig', ['articles' => $articles]);
     }
 
-    public function show()
+    public function show(): void
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
@@ -39,7 +40,7 @@ class ArticlesController extends Controller
     }
     
 
-    public function add()
+    public function add(): void
     {
         $this->articleRepository = new ArticleRepository();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -67,7 +68,7 @@ class ArticlesController extends Controller
         return $this->twig->display('Articles/add.html.twig');
     }
 
-    public function supprimer()
+    public function supprimer(): void
     {
         if (!isset($_SESSION['username'])) {
             Application::$app->response->redirect('/login');
@@ -89,7 +90,7 @@ class ArticlesController extends Controller
         Application::$app->response->redirect('/articles');
     }
 
-    public function modifier()
+    public function modifier(): void
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
@@ -108,7 +109,7 @@ class ArticlesController extends Controller
         return $this->twig->display('Articles/modifier.html.twig', ['article' => $article]);
     }
 
-    public function publish()
+    public function publish(): void
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
@@ -117,7 +118,7 @@ class ArticlesController extends Controller
         Application::$app->response->redirect('/article?id=' . $id . '');
     }
 
-    public function unpublish()
+    public function unpublish(): void
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
@@ -126,7 +127,7 @@ class ArticlesController extends Controller
         Application::$app->response->redirect('/articles');
     }
 
-    public function setIsPublished(bool $isPublished)
+    public function setIsPublished(bool $isPublished): void
     {
         
         $id = $_GET['id'];

@@ -22,7 +22,7 @@ class User
         $this->updated_at = new Datetime(date('Y-m-d H:i:s'));
     }
 
-    public function login()
+    public function login(): void
     {
         $db = Database::getInstance();
         $sql = "SELECT * FROM users WHERE username = :username";
@@ -47,7 +47,7 @@ class User
         //header('Location: /Articles');
     }
 
-    public function lougout()
+    public function lougout(): void
     {
         session_start();
         unset($_SESSION['user']);
@@ -56,7 +56,7 @@ class User
 
     }
 
-    public function save()
+    public function save(): void
     {
         $db = Database::getInstance();
         $sql = "INSERT INTO users (username, password, email, role, created_at, updated_at) VALUES (:username, :password, :email, :role, :created_at, :updated_at)";
@@ -74,7 +74,7 @@ class User
     /**
      * Get the value of id
      */ 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -84,7 +84,7 @@ class User
      *
      * @return  self
      */ 
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 
@@ -94,7 +94,7 @@ class User
     /**
      * Get the value of username
      */ 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -104,7 +104,7 @@ class User
      *
      * @return  self
      */ 
-    public function setUsername($username)
+    public function setUsername($username): self
     {
         $this->username = $username;
 
@@ -114,7 +114,7 @@ class User
     /**
      * Get the value of password
      */ 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -124,7 +124,7 @@ class User
      *
      * @return  self
      */ 
-    public function setPassword($password)
+    public function setPassword($password): self
     {
         $this->password = $password;
 
@@ -134,7 +134,7 @@ class User
     /**
      * Get the value of email
      */ 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -144,7 +144,7 @@ class User
      *
      * @return  self
      */ 
-    public function setEmail($email)
+    public function setEmail($email): self
     {
         $this->email = $email;
 
@@ -154,7 +154,7 @@ class User
     /**
      * Get the value of role
      */ 
-    public function getRole()
+    public function getRole(): string
     {
         return $this->role;
     }
@@ -164,7 +164,7 @@ class User
      *
      * @return  self
      */ 
-    public function setRole($role)
+    public function setRole($role): self
     {
         $this->role = $role;
 
@@ -174,7 +174,7 @@ class User
     /**
      * Get the value of created_at
      */ 
-    public function getCreatedAt()
+    public function getCreatedAt(): Datetime
     {
         return $this->created_at;
     }
@@ -184,7 +184,7 @@ class User
      *
      * @return  self
      */ 
-    public function setCreatedAt($created_at)
+    public function setCreatedAt($created_at): self
     {
         $this->created_at = $created_at;
 
@@ -194,7 +194,7 @@ class User
     /**
      * Get the value of updated_at
      */ 
-    public function getUpdatedAt()
+    public function getUpdatedAt(): Datetime
     {
         return $this->updated_at;
     }
@@ -204,7 +204,7 @@ class User
      *
      * @return  self
      */ 
-    public function setUpdatedAt($updated_at)
+    public function setUpdatedAt($updated_at): self
     {
         $this->updated_at = $updated_at;
 

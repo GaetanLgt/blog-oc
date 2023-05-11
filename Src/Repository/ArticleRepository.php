@@ -50,7 +50,7 @@ class ArticleRepository
         );
     }
 
-    public function create()
+    public function create(): void
     {
 
         $date = date('Y-m-d H:i:s');
@@ -71,14 +71,14 @@ class ArticleRepository
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('DELETE FROM articles WHERE id = :id');
         $stmt->execute(['id' => $id]);
     }
 
-    public function update(int $id)
+    public function update(int $id): void
     {
         /*on récupe l'article à modifier*/
         $article = $this->findById($id);
@@ -161,7 +161,7 @@ class ArticleRepository
         ]);
     }
 
-    public function getLastInsertedId()
+    public function getLastInsertedId(): int
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('SELECT id FROM articles ORDER BY id DESC LIMIT 1');
@@ -170,7 +170,7 @@ class ArticleRepository
         return $data['id'];
     }
 
-    public function setImage()
+    public function setImage(): ?string
     {
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
             $images = $_FILES['image']['name'];
@@ -184,7 +184,7 @@ class ArticleRepository
         }
     }
 
-    public function getArticlesComments($articleId)
+    public function getArticlesComments($articleId): array
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('SELECT * FROM comments WHERE article_id = :article_id');
@@ -203,13 +203,12 @@ class ArticleRepository
             $data['id'],
             $data['content'],
             $data['author'],
-            $data['created_at'],
             $data['updated_at'],
             $data['article_id']
         );
     }
 
-    public function getComments()
+    public function getComments(): array
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('SELECT * FROM comments');
@@ -222,7 +221,7 @@ class ArticleRepository
         return $comments;
     }
 
-    public function deleteComment(int $id)
+    public function deleteComment(int $id): void
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('DELETE FROM comments WHERE id = :id');
@@ -230,7 +229,7 @@ class ArticleRepository
     }
 
 
-    public function updateComment(int $id)
+    public function updateComment(int $id): void
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('UPDATE comments SET content = :content, author = :author, updated_at = :updated_at WHERE id = :id');
@@ -242,7 +241,7 @@ class ArticleRepository
         ]);
     }
 
-    public function createComment(int $articleId)
+    public function createComment(int $articleId): void
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('INSERT INTO comments (content, author, created_at, updated_at, article_id) VALUES (:content, :author, :created_at, :updated_at, :article_id)');
@@ -255,7 +254,7 @@ class ArticleRepository
         ]);
     }
 
-    public function setIsPublished($id)
+    public function setIsPublished($id): void
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('UPDATE articles SET is_published = :is_published WHERE id = :id');
@@ -264,7 +263,7 @@ class ArticleRepository
         $stmt->execute();
     }
 
-    public function getPublishedArticles()
+    public function getPublishedArticles(): array
     {
         $db = Database::getInstance();
         $stmt = $db->prepare('SELECT * FROM articles WHERE is_published = :is_published');
@@ -277,7 +276,7 @@ class ArticleRepository
         return $articles;
     }
 
-    public function findBy($key, $value)
+    public function findBy($key, $value): array
     {
         $db = Database::getInstance();
         $stmt = $db->prepare("SELECT * FROM articles WHERE $key = :$key");

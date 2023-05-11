@@ -6,7 +6,7 @@ use App\Core\Controller;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(): void
     {
         return $this->renderView('Main/index.html.twig');
     }

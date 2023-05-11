@@ -8,7 +8,7 @@ use App\Repository\ArticleRepository;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function index(): void
     {
         $this->checkAccess();
         $articleRepository = new ArticleRepository();
@@ -16,7 +16,7 @@ class ProfileController extends Controller
         return $this->renderView('Profil/index.html.twig', ['articles' => $articles]);
     }
 
-    public function checkAccess()
+    public function checkAccess(): void
     {
         if (!isset($_SESSION['username'])) {
             Application::$app->response->redirect('/login');

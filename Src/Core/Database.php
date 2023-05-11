@@ -10,7 +10,7 @@ class Database
 
     private function __construct() {}
 
-    public static function getInstance()
+    public static function getInstance(): PDO
     {
         if (self::$instance === null) {
             $dsn = "mysql:host=".DB_HOST.";dbname=".DB_NAME;

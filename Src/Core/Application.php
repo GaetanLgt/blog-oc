@@ -28,7 +28,7 @@ class Application
         self::$session = $session;
     }
 
-    public function run()
+    public function run(): void
     {
         $this->router->resolve();
     }

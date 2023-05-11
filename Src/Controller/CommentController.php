@@ -17,15 +17,17 @@ class CommentController extends Controller
         $this->commentRepository = new CommentRepository();
     }
 
-    public function add()
+    public function add(): void
     {
         $id = $_GET['id'] ?? null; // Vérifier si l'ID de l'article est défini
         if ($id !== null && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $comment = new Comment(
+                0,
                 $_POST['content'],
+                $_SESSION['username'], // Utilisez 'Y-m-d H:i:s' pour obtenir le format correct de la date
+                date('Y-m-d H:i:s'),
                 intval($id) // Convertir en entier
             );
-            $comment->setAuthor($_SESSION['username']);
             $this->commentRepository->save($comment);
             Application::$app->response->redirect('/articles');
         }
@@ -33,7 +35,7 @@ class CommentController extends Controller
         return $this->twig->display('Comments/add.html.twig');
     }
 
-    public function supprimer()
+    public function supprimer(): void
     {
         $id = $_GET['id'] ?? null; // Vérifier si l'ID du commentaire est défini
         if ($id !== null) {
