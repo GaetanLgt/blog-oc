@@ -8,8 +8,8 @@
  * 
  * 
  */
-error_reporting(E_ALL);
-ini_set("display_errors", 0);
+// error_reporting(E_ALL);
+// ini_set("display_errors", 1);
 
 require_once dirname(dirname(__FILE__)) . '/vendor/autoload.php';
 use Dotenv\Dotenv;
