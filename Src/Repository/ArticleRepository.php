@@ -109,6 +109,9 @@ class ArticleRepository
         }
         /*on vérifie si l'image est bien rempli*/
         if(isset($_POST['image'])){
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+                $images = $this->setImage();
+            }
             $image = $_POST['image'];
         } else {
             /* on récupère l'image de l'article*/
@@ -144,9 +147,7 @@ class ArticleRepository
         }
         $db = Database::getInstance();
         $stmt = $db->prepare('UPDATE articles SET id = :id, title = :title, chapo = :chapo, content = :content, image = :image, author = :author, is_published = :is_published, published_at = :published_at  WHERE id = :id');
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-            $images = $this->setImage();
-        }
+        
         $stmt->execute([
             'id' => $id,
             'title' => $title,
@@ -154,7 +155,7 @@ class ArticleRepository
             'content' => $content,
             'image' => $images ?? '',
             'author' => $author,
-            'is_published' => $is_published,
+            'is_published' => $is_published ?? false,
             'published_at' => $published_at
 
         ]);

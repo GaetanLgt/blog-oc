@@ -101,7 +101,7 @@ class ArticlesController extends Controller
             $article->setImage($image);
             $article->setContent($_POST['content']);
             $article->setAuthor($_POST['author']);
-            $this->articleRepository->setIsPublished($id,$_POST['is_published']);
+            $article->setIsPublished($_POST['is_published'] ??false);
             $this->articleRepository->update($article->getId());
             Application::$app->response->redirect('/articles');
         }

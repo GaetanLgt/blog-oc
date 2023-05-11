@@ -19,6 +19,10 @@
 		<div class="col-md-6">
 			<label for="author" class="form-label text-muted">Auteur : {{ session.username }}</label>
 			<input type="text" class="form-control invisible" id="author" name="author" value="{{ session.username }}" >
+			<label for="is_published" class="form-label text-muted">Publié : {{ article.isPublished }}</label>
+			<select id="is_published" name="is_published" class="form-select invisible">
+				<option value="{{ article.isPublished }}" selected></option>
+			</select>
 		</div>
 		<div class="col-md-6">
 			<label for="image" class="form-label">Images</label>
