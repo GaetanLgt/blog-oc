@@ -1,30 +1,92 @@
-# Blog Openclassromms
+# Blog Openclassrooms
+
+[![SymfonyInsight](https://insight.symfony.com/projects/84cd1851-bfb2-4c4c-8646-5b3b85b956b6/mini.svg)](https://insight.symfony.com/projects/84cd1851-bfb2-4c4c-8646-5b3b85b956b6)
 
 ## Description
 
-Ce projet est un blog réalisé dans le cadre de la formation de développeur d'application Php/Symfony dispensée par Openclassrooms.
-
-## Installation
-
-voici comment installer le projet en local :
-
-1. Cloner le projet sur votre machine
-2. Installer les dépendances avec la commande `composer install`
-3. Créer un fichier `.env.local` à la racine du projet et y ajouter les informations de connexion à la base de données
-4. Créer la base de données avec le fichier `blog.sql`
-5. Lancer le serveur avec la commande `symfony server:start`
-6. Rendez-vous sur `localhost:8000` pour accéder au site
+Ce projet est un blog réalisé dans le cadre de la formation de développeur d'application Php/Symfony dispensée par Openclassrooms. Il s'agit d'une application web permettant de créer, afficher, éditer et supprimer des articles de blog, ainsi que de laisser des commentaires sur les articles.
 
 ## Fonctionnalités
 
-- Affichage de la liste des articles
-- Affichage d'un article
-- Affichage des commentaires d'un article
-- Ajout d'un commentaire
-- Signalement d'un commentaire
-- Création d'un compte utilisateur
-- Connexion à un compte utilisateur
-- Déconnexion d'un compte utilisateur
-- Modification d'un compte utilisateur
-- Suppression d'un compte utilisateur
+- Création d'un compte utilisateur avec authentification.
+- Création, affichage, édition et suppression d'articles de blog.
+- Ajout de commentaires sur les articles.
+- Gestion des utilisateurs avec des rôles (administrateur, utilisateur).
+- Interface d'administration pour la gestion des articles et des utilisateurs.
+- Recherche d'articles par catégorie ou par mots-clés.
+- Pagination des articles pour une meilleure navigation.
 
+## Prérequis
+
+Avant de pouvoir exécuter le projet, assurez-vous d'avoir les éléments suivants installés :
+
+- PHP 7.4 ou une version ultérieure
+- Symfony CLI
+- Composer
+- MySQL ou un autre système de gestion de base de données
+
+## Installation
+
+1. Clonez ce dépôt sur votre machine locale :
+
+```bash
+git clone https://github.com/votre-utilisateur/blog-openclassrooms.git
+```
+
+2. Accédez au répertoire du projet :
+
+```bash
+cd blog-openclassrooms
+```
+
+3. Installez les dépendances du projet via Composer :
+
+```bash
+composer install
+```
+
+4. Configurez les paramètres de connexion à la base de données dans le fichier `.env`.
+
+5. Créez la base de données en exécutant la commande suivante :
+
+```bash
+php bin/console doctrine:database:create
+```
+
+6. Appliquez les migrations pour créer les tables de la base de données :
+
+```bash
+php bin/console doctrine:migrations:migrate
+```
+
+7. Lancez le serveur de développement Symfony :
+
+```bash
+symfony serve
+```
+
+8. Accédez à l'application dans votre navigateur à l'adresse suivante :
+
+```
+http://localhost:8000
+```
+
+## Contribution
+
+Les contributions à ce projet sont les bienvenues. Voici comment vous pouvez contribuer :
+
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes and commit them.
+4. Push your branch to your forked repository.
+5. Submit a pull request.
+
+Veuillez-vous assurer de suivre les bonnes pratiques de développement et de respecter les normes de codage en vigueur.
+
+## Auteur
+
+Ce projet a été réalisé par GaetanLgt, dans le cadre de la formation Openclassrooms.
+
+## License
+
+Ce projet est sous license [MIT](LICENSE).
