@@ -87,28 +87,28 @@ class ArticleRepository
             throw new Exception('Article not found');
         }
         /*on vérifie si le titre est bien rempli*/
-        if(isset($_POST['title'])){
+        if (isset($_POST['title'])) {
             $title = $_POST['title'];
         } else {
             /* on récupère le titre de l'article*/
             $title = $article->getTitle();
         }
         /*on vérifie si le chapo est bien rempli*/
-        if(isset($_POST['chapo'])){
+        if (isset($_POST['chapo'])) {
             $chapo = $_POST['chapo'];
         } else {
             /* on récupère le chapo de l'article*/
             $chapo = $article->getChapo();
         }
         /*on vérifie si le contenu est bien rempli*/
-        if(isset($_POST['content'])){
+        if (isset($_POST['content'])) {
             $content = $_POST['content'];
         } else {
             /* on récupère le contenu de l'article*/
             $content = $article->getContent();
         }
         /*on vérifie si l'image est bien rempli*/
-        if(isset($_POST['image'])){
+        if (isset($_POST['image'])) {
             if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
                 $images = $this->setImage();
             }
@@ -118,28 +118,28 @@ class ArticleRepository
             $image = $article->getImage();
         }
         /*on vérifie si l'auteur est bien rempli*/
-        if(isset($_POST['author'])){
+        if (isset($_POST['author'])) {
             $author = $_POST['author'];
         } else {
             /* on récupère l'auteur de l'article*/
             $author = $article->getAuthor();
         }
         /*on vérifie si la publication est bien rempli*/
-        if(isset($_POST['is_published'])){
+        if (isset($_POST['is_published'])) {
             $is_published = $_POST['is_published'];
         } else {
             /* on récupère la publication de l'article*/
             $is_published = $article->getIsPublished();
         }
         /*on vérifie si la date de publication est bien rempli*/
-        if(isset($_POST['published_at'])){
+        if (isset($_POST['published_at'])) {
             $published_at = $_POST['published_at'];
         } else {
             /* on récupère la date de publication de l'article*/
             $published_at = $article->getPublishedAt();
         }
         /*on vérifie si l'image est bien rempli*/
-        if(isset($_FILES['image'])){
+        if (isset($_FILES['image'])) {
             $images = $_FILES['image']['name'];
         } else {
             /* on récupère l'image de l'article*/
@@ -147,7 +147,7 @@ class ArticleRepository
         }
         $db = Database::getInstance();
         $stmt = $db->prepare('UPDATE articles SET id = :id, title = :title, chapo = :chapo, content = :content, image = :image, author = :author, is_published = :is_published, published_at = :published_at  WHERE id = :id');
-        
+
         $stmt->execute([
             'id' => $id,
             'title' => $title,

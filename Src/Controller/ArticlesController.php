@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Core\Request;
@@ -25,7 +26,7 @@ class ArticlesController extends Controller
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);
-    
+
         if (!$article) {
             // Si l'article n'existe pas, afficher une erreur 404
             $controller = new Controller();
@@ -33,12 +34,11 @@ class ArticlesController extends Controller
         }
         $commentRepository = new CommentRepository();
         $comments = $commentRepository->findAll($id);
-        
-        
+
+
         return $this->twig->display('Articles/show.html.twig', ['article' => $article, 'comments' => $comments]);
-    
     }
-    
+
 
     public function add()
     {
@@ -62,7 +62,7 @@ class ArticlesController extends Controller
                 $id = $this->articleRepository->getLastInsertedId();
                 $this->articleRepository->setIsPublished($id);
             }
-            Application::$app->response->redirect('/articles');            
+            Application::$app->response->redirect('/articles');
         }
 
         return $this->twig->display('Articles/add.html.twig');
@@ -72,7 +72,6 @@ class ArticlesController extends Controller
     {
         if (!isset($_SESSION['username'])) {
             Application::$app->response->redirect('/login');
-
         }
         if (!isset($_GET['id'])) {
             Application::$app->response->redirect('/articles');
@@ -83,7 +82,6 @@ class ArticlesController extends Controller
         $author = $article->getAuthor();
         if ($author != $_SESSION['username'] || $_SESSION['role'] !== 'admin') {
             Application::$app->response->redirect('/profil');
-
         }
         $this->articleRepository->delete($id);
         Application::$app->response->redirect('/articles');
@@ -101,7 +99,7 @@ class ArticlesController extends Controller
             $article->setImage($image);
             $article->setContent($_POST['content']);
             $article->setAuthor($_POST['author']);
-            $article->setIsPublished($_POST['is_published'] ??false);
+            $article->setIsPublished($_POST['is_published'] ?? false);
             $this->articleRepository->update($article->getId());
             Application::$app->response->redirect('/articles');
         }
@@ -128,7 +126,7 @@ class ArticlesController extends Controller
 
     public function setIsPublished(bool $isPublished): void
     {
-        
+
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);

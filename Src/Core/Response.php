@@ -18,5 +18,4 @@ class Response
     {
         header('Location: ' . $route);
     }
-
 }

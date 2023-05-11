@@ -35,7 +35,6 @@ class User
                 session_start();
                 Application::$app->session->set('user', $user);
                 Application::$app->response->redirect('/articles');
-
             } else {
                 $_SESSION['error'] = "Utilisateur inexistant ou mot de passe incorrect";
                 Application::$app->response->redirect('/login');
@@ -66,12 +65,12 @@ class User
         $stmt->bindValue(':created_at', date('Y-m-d H:i:s'));
         $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'));
 
-        
+
         $stmt->execute();
     }
     /**
      * Get the value of id
-     */ 
+     */
     public function getId(): int
     {
         return $this->id;
@@ -81,7 +80,7 @@ class User
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id): self
     {
         $this->id = $id;
@@ -91,7 +90,7 @@ class User
 
     /**
      * Get the value of username
-     */ 
+     */
     public function getUsername(): string
     {
         return $this->username;
@@ -101,7 +100,7 @@ class User
      * Set the value of username
      *
      * @return  self
-     */ 
+     */
     public function setUsername($username): self
     {
         $this->username = $username;
@@ -111,7 +110,7 @@ class User
 
     /**
      * Get the value of password
-     */ 
+     */
     public function getPassword(): string
     {
         return $this->password;
@@ -121,7 +120,7 @@ class User
      * Set the value of password
      *
      * @return  self
-     */ 
+     */
     public function setPassword($password): self
     {
         $this->password = $password;
@@ -131,7 +130,7 @@ class User
 
     /**
      * Get the value of email
-     */ 
+     */
     public function getEmail(): string
     {
         return $this->email;
@@ -141,7 +140,7 @@ class User
      * Set the value of email
      *
      * @return  self
-     */ 
+     */
     public function setEmail($email): self
     {
         $this->email = $email;
@@ -151,7 +150,7 @@ class User
 
     /**
      * Get the value of role
-     */ 
+     */
     public function getRole(): string
     {
         return $this->role;
@@ -161,7 +160,7 @@ class User
      * Set the value of role
      *
      * @return  self
-     */ 
+     */
     public function setRole($role): self
     {
         $this->role = $role;
@@ -171,7 +170,7 @@ class User
 
     /**
      * Get the value of created_at
-     */ 
+     */
     public function getCreatedAt(): Datetime
     {
         return $this->created_at;
@@ -181,7 +180,7 @@ class User
      * Set the value of created_at
      *
      * @return  self
-     */ 
+     */
     public function setCreatedAt($created_at): self
     {
         $this->created_at = $created_at;
@@ -191,7 +190,7 @@ class User
 
     /**
      * Get the value of updated_at
-     */ 
+     */
     public function getUpdatedAt(): Datetime
     {
         return $this->updated_at;
@@ -201,7 +200,7 @@ class User
      * Set the value of updated_at
      *
      * @return  self
-     */ 
+     */
     public function setUpdatedAt($updated_at): self
     {
         $this->updated_at = $updated_at;

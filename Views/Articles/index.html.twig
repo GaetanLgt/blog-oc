@@ -9,7 +9,7 @@
 	<div class="container">
 
 		{% for article in articles %}
-			
+
 			<div class="card" style="width: 18rem;">
 				{% if article.image %}
 					<img src="Assets/images/{{ article.image }}" class="card-img-top" alt="...">
@@ -25,7 +25,7 @@
 					<p>
 						<a href="article?id={{ article.id }}" class="card-link btn btn-primary">Voir plus</a>
 					</p>
-					
+
 					{% if article.author == session.username or session.role == "admin" %}
 						<div>
 							<a href="modifier?id={{ article.id }}" class="card-link btn btn-warning">Modifier</a>
@@ -35,7 +35,6 @@
 				</div>
 			</div>
 
-			
 
 		{% endfor %}
 	</div>

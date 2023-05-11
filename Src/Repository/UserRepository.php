@@ -25,6 +25,6 @@ class UserRepository
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $user = $stmt->fetchObject(User::class);
-        return $user; 
+        return $user;
     }
 }

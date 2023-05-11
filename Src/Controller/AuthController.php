@@ -23,7 +23,7 @@ class AuthController extends Controller
 
     public function handleLogin()
     {
-        
+
         $email = $_POST['email'];
         $password = $_POST['password'];
         $user = UserRepository::where('email', $email);
@@ -47,7 +47,7 @@ class AuthController extends Controller
     {
         foreach ($_POST as $key => $value) {
             $_POST[$key] = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        }        
+        }
         $username = trim($_POST['username']);
         $email = trim($_POST['email']);
         $password = trim($_POST['password']);
@@ -91,5 +91,4 @@ class AuthController extends Controller
         session_destroy();
         Application::$app->response->redirect('/');
     }
-
 }

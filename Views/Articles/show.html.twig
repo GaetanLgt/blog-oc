@@ -6,54 +6,58 @@
 
 {% block body %}
 
-<div class="container">
-{% if article.image %}
-	<img src="Assets/images/{{ article.image }}" alt="{{ article.title }}" class="img-fluid">
-	
-{% endif %}
-<h1>{{ article.title }}</h1>
-	<p class="text-muted">écrit par {{ article.author }} le {{ article.publishedAt| date("d m Y H:i:sA", "Europe/Paris") }}</p>
-    <div class="container">
-	<p>{{ article.content }}</p>
-</div>
-	<div>
-		{% if comments is not empty %}
-			<h2>Commentaires</h2>
-			{% for comment in comments %}
-				<div class="card">
-					<div class="card-header">
-						Commentaire de {{ comment.author }} le {{ comment.publishedAt| date("d m Y H:i:sA", "Europe/Paris") }}
+	<div class="container">
+		{% if article.image %}
+			<img src="Assets/images/{{ article.image }}" alt="{{ article.title }}" class="img-fluid">
+
+		{% endif %}
+		<h1>{{ article.title }}</h1>
+		<p class="text-muted">écrit par
+			{{ article.author }}
+			le
+			{{ article.publishedAt| date("d m Y H:i:sA", "Europe/Paris") }}</p>
+		<div class="container">
+			<p>{{ article.content }}</p>
+		</div>
+		<div>
+			{% if comments is not empty %}
+				<h2>Commentaires</h2>
+				{% for comment in comments %}
+					<div class="card">
+						<div class="card-header">
+							Commentaire de
+							{{ comment.author }}
+							le
+							{{ comment.publishedAt| date("d m Y H:i:sA", "Europe/Paris") }}
+						</div>
+						<div class="card-body">
+							{{ comment.content }}
+						</div>
 					</div>
-					<div class="card-body">
-						{{ comment.content }}
+				{% endfor %}
+			{% endif %}
+		</div>
+
+		{% if session.user is not empty %}
+			<div>
+				<h2>
+					Ajouter un commentaire</h2>
+				<form action="/comment?id={{ article.id }}" method="post">
+					<div class="form-group">
+						<label for="content">Commentaire</label>
+						<textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
 					</div>
-				</div>
-			{% endfor %}
+					<button type="submit" class="btn btn-primary">Envoyer</button>
+					<div class="form-group invisible">
+						<label for="author">Auteur</label>
+						<input type="text" name="author" id="author" class="form-control" value="{{ session.username }}">
+						<label for="article">Article</label>
+						<input type="text" name="article" id="article" class="form-control" value="{{ article.id }}">
+					</div>
+				</form>
+			</div>
 		{% endif %}
 	</div>
-
-{% if session.user is not empty %}
-	<div>
-		<h2> Ajouter un commentaire</h2>
-		<form action="/comment?id={{ article.id }}" method="post">
-			<div class="form-group">
-				<label for="content">Commentaire</label>
-				<textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
-			</div>
-			<button type="submit" class="btn btn-primary">Envoyer</button>
-			<div class="form-group invisible">
-				<label for="author">Auteur</label>
-				<input type="text" name="author" id="author" class="form-control" value="{{ session.username }}">
-				<label for="article">Article</label>
-				<input type="text" name="article" id="article" class="form-control" value="{{ article.id }}">
-			</div>
-		</form>
-	</div>
-{% endif %}
-</div>
 {% endblock %}
 
-{% block javascripts %}
-
-
-{% endblock %}
+{% block javascripts %}{% endblock %}

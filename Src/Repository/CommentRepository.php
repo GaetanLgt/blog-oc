@@ -8,17 +8,17 @@ use App\Models\Comment;
 class CommentRepository
 {
     public function save(Comment $comment): void
-{
-    $db = Database::getInstance();
-    $sql = "INSERT INTO comments (content, author, created_at, updated_at, article_id) VALUES (:content, :author, :created_at, :updated_at, :article_id)";
-    $stmt = $db->prepare($sql);
-    $stmt->bindValue(':content', $comment->getContent());
-    $stmt->bindValue(':author', $comment->getAuthor());
-    $stmt->bindValue(':created_at', $comment->getCreatedAt());
-    $stmt->bindValue(':updated_at', $comment->getUpdatedAt());
-    $stmt->bindValue(':article_id', $comment->getArticleId());
-    $stmt->execute();
-}
+    {
+        $db = Database::getInstance();
+        $sql = "INSERT INTO comments (content, author, created_at, updated_at, article_id) VALUES (:content, :author, :created_at, :updated_at, :article_id)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':content', $comment->getContent());
+        $stmt->bindValue(':author', $comment->getAuthor());
+        $stmt->bindValue(':created_at', $comment->getCreatedAt());
+        $stmt->bindValue(':updated_at', $comment->getUpdatedAt());
+        $stmt->bindValue(':article_id', $comment->getArticleId());
+        $stmt->execute();
+    }
 
     public function findAll($id): array
     {

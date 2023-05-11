@@ -11,7 +11,7 @@ class Comment
     public string $updated_at;
     public int $article_id;
 
-    public function __construct(int $id, string $content,string $author, string $updated_at, int $article_id)
+    public function __construct(int $id, string $content, string $author, string $updated_at, int $article_id)
     {
         $this->id = $id ?? 0;
         $this->content = $content;
@@ -23,7 +23,7 @@ class Comment
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId(): int
     {
         return $this->id;
@@ -33,7 +33,7 @@ class Comment
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id): self
     {
         $this->id = $id;
@@ -43,7 +43,7 @@ class Comment
 
     /**
      * Get the value of content
-     */ 
+     */
     public function getContent(): string
     {
         return $this->content;
@@ -53,7 +53,7 @@ class Comment
      * Set the value of content
      *
      * @return  self
-     */ 
+     */
     public function setContent($content): self
     {
         $this->content = $content;
@@ -63,7 +63,7 @@ class Comment
 
     /**
      * Get the value of author
-     */ 
+     */
     public function getAuthor(): string
     {
         return $this->author;
@@ -73,7 +73,7 @@ class Comment
      * Set the value of author
      *
      * @return  self
-     */ 
+     */
     public function setAuthor($author): self
     {
         $author = $_SESSION['username'];
@@ -83,7 +83,7 @@ class Comment
 
     /**
      * Get the value of created_at
-     */ 
+     */
     public function getCreatedAt(): string
     {
         return $this->created_at;
@@ -93,7 +93,7 @@ class Comment
      * Set the value of created_at
      *
      * @return  self
-     */ 
+     */
     public function setCreatedAt($created_at): self
     {
         $this->created_at = $created_at;
@@ -103,7 +103,7 @@ class Comment
 
     /**
      * Get the value of updated_at
-     */ 
+     */
     public function getUpdatedAt(): string
     {
         return $this->updated_at;
@@ -113,7 +113,7 @@ class Comment
      * Set the value of updated_at
      *
      * @return  self
-     */ 
+     */
     public function setUpdatedAt($updated_at): self
     {
         $this->updated_at = $updated_at;
@@ -123,7 +123,7 @@ class Comment
 
     /**
      * Get the value of article_id
-     */ 
+     */
     public function getArticleId(): int
     {
         return $this->article_id;
@@ -133,7 +133,7 @@ class Comment
      * Set the value of article_id
      *
      * @return  self
-     */ 
+     */
     public function setArticleId($article_id): self
     {
         $this->article_id = $article_id;
