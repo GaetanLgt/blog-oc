@@ -11,7 +11,7 @@ use App\Repository\CommentRepository;
 
 class ArticlesController extends Controller
 {
-    private $articleRepository;
+    private ArticleRepository $articleRepository;
 
     public function index()
     {

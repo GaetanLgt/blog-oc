@@ -16,7 +16,7 @@ class Session
 
     public static function get($key, $secondKey = false): bool|string
     {
-        if ($secondKey == true) {
+        if ($secondKey === true) {
             if (isset($_SESSION[$key][$secondKey])) {
                 return $_SESSION[$key][$secondKey];
             }
