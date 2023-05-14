@@ -28,10 +28,9 @@
 					</ul>
 					<div id="auth">
 						{% if session.username %}
-
 							<a href="/profil" class="card-link btn btn-primary">{{session.username}}</a>
 						{% endif %}
-						{% if session.user %}
+						{% if session.user_id %}
 							<a class="btn btn-info" href="/ajouter">Ajouter un article</a>
 							<a class="btn btn-warning" href="/logout">Logout</a>
 						{% else %}

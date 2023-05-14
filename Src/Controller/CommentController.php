@@ -24,8 +24,7 @@ class CommentController extends Controller
             $comment = new Comment(
                 0,
                 $_POST['content'],
-                $_POST['author'],
-                date('Y-m-d H:i:s'), // Utilisez 'Y-m-d H:i:s' pour obtenir le format correct de la date
+                $_POST['author_id'],
                 $id
             );
             $this->commentRepository->save($comment);

@@ -8,6 +8,7 @@ use App\Core\Controller;
 use App\Core\Application;
 use App\Core\Response;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 
 class ArticlesController extends Controller
@@ -42,18 +43,15 @@ class ArticlesController extends Controller
 
     public function add()
     {
+        if (!isset($_SESSION['username'])) {
+            Application::$app->response->redirect('/login');
+        }
+        $categories = [];
+        $categoriesRepository = new CategoryRepository();
+        $categories = $categoriesRepository->findAll();
         $this->articleRepository = new ArticleRepository();
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $article = new Article(
-                0,
-                $_POST['title'],
-                $_POST['chapo'],
-                $_POST['content'],
-                $_POST['image'] ?? '',
-                $_POST['author'],
-                intval($_POST['is_published']),
-                date('Y-m-d H:i:s') // Utilisez 'Y-m-d H:i:s' pour obtenir le format correct de la date
-            );
             $this->articleRepository->create();
             if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
                 $this->articleRepository->setImage();
@@ -65,7 +63,7 @@ class ArticlesController extends Controller
             Application::$app->response->redirect('/articles');
         }
 
-        return $this->twig->display('Articles/add.html.twig');
+        return $this->twig->display('Articles/add.html.twig', ['categories' => $categories]);
     }
 
     public function supprimer(): void
@@ -79,7 +77,7 @@ class ArticlesController extends Controller
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);
-        $author = $article->getAuthor();
+        $author = $article->getAuthor_id();
         if ($author != $_SESSION['username'] || $_SESSION['role'] !== 'admin') {
             Application::$app->response->redirect('/profil');
         }
@@ -92,15 +90,14 @@ class ArticlesController extends Controller
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);
-        $image = $this->articleRepository->setImage();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $article->setTitle($_POST['title']);
-            $article->setChapo($_POST['chapo']);
-            $article->setImage($image);
-            $article->setContent($_POST['content']);
-            $article->setAuthor($_POST['author']);
-            $article->setIsPublished($_POST['is_published'] ?? false);
-            $this->articleRepository->update($article->getId());
+            $article->setTitle(trim($_POST['title']));
+            $article->setChapo(trim($_POST['chapo']));
+            $article->setImage(trim($_POST['image']));
+            $article->setContent(trim($_POST['content']));
+            $article->setAuthor_id(trim($_POST['author']));
+            $article->setIsPublished(trim($_POST['is_published']) ?? false);
+            $this->articleRepository->update();
             Application::$app->response->redirect('/articles');
         }
         return $this->twig->display('Articles/modifier.html.twig', ['article' => $article]);
@@ -111,7 +108,7 @@ class ArticlesController extends Controller
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $_POST['is_published'] = true;
-        $this->articleRepository->update($id);
+        $this->articleRepository->update();
         Application::$app->response->redirect('/article?id=' . $id . '');
     }
 
@@ -120,7 +117,7 @@ class ArticlesController extends Controller
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $_POST['is_published'] = false;
-        $this->articleRepository->update($id);
+        $this->articleRepository->update();
         Application::$app->response->redirect('/articles');
     }
 

@@ -8,9 +8,10 @@
 	<h1>Articles</h1>
 	<div class="container">
 		<form class="row g-3" method="post" enctype="multipart/form-data">
-			<label for="author" class="form-label text-muted">Auteur :
-				{{ session.username }}</label>
-			<input type="text" class="form-control invisible" id="author" name="author" value="{{ session.username }}">
+			<label for="author_id" class="form-label text-muted">Auteur :
+				{{ session.user_id }}</label>
+			<input type="text" class="form-control invisible" id="author_id" name="author_id" value="{{ session.user_id }}">
+			<input type="text" class="form-control invisible" id="slug" name="slug"></input>
 			<div class="col-md-6">
 				<label for="title" class="form-label">Titre</label>
 				<input type="text" class="form-control" id="title" name="title">
@@ -18,6 +19,14 @@
 			<div class="col-md-6">
 				<label for="chapo" class="form-label">chapo</label>
 				<input type="text" class="form-control" id="chapo" name="chapo">
+			</div>
+			<div class="col-md-6 category">
+				<select name="category_id" id="category_id">
+					<option value="" selected disabled>Choisir une catégorie</option>
+					{% for category in categories %}
+						<option name="category_id" value="{{ category.id }}">{{ category.name }}</option>
+					{% endfor %}
+				</select>
 			</div>
 			<div class="col-md-6">
 				<label for="is_published" class="form-label">Publier ?</label>

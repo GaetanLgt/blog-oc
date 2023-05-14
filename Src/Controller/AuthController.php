@@ -24,8 +24,8 @@ class AuthController extends Controller
     public function handleLogin()
     {
 
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $email = trim($_POST['email']);
+        $password = trim($_POST['password']);
         $user = UserRepository::where('email', $email);
         if (!$user) {
             return $this->renderView('Auth/login.html.twig', [
@@ -37,9 +37,9 @@ class AuthController extends Controller
                 'errors' => ['password' => 'Password is incorrect']
             ]);
         }
-        $_SESSION['user'] = $user->id;
-        $_SESSION['username'] = $user->username;
-        $_SESSION['role'] = $user->role;
+        Application::$session->set('user_id', $user->id);
+        Application::$session->set('username', $user->username);
+        Application::$session->set('role', $user->role);
         Application::$app->response->redirect('/');
     }
 
@@ -81,7 +81,9 @@ class AuthController extends Controller
         $user->username = $username;
         $user->password = password_hash($password, PASSWORD_DEFAULT);
         $user->save();
-        $_SESSION['user'] = $user->username;
+        Application::$session->set('user_id', $user->id);
+        Application::$session->set('username', $user->username);
+        Application::$session->set('role', $user->role);
         Application::$app->response->redirect('/');
     }
 

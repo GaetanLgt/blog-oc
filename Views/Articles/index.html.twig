@@ -26,7 +26,7 @@
 						<a href="article?id={{ article.id }}" class="card-link btn btn-primary">Voir plus</a>
 					</p>
 
-					{% if article.author == session.username or session.role == "admin" %}
+					{% if article.author_id == session.user_id or session.role == "admin" %}
 						<div>
 							<a href="modifier?id={{ article.id }}" class="card-link btn btn-warning">Modifier</a>
 							<a href="supprimer?id={{ article.id }}" class="card-link btn btn-danger">Delete</a>

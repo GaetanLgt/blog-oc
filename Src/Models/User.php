@@ -9,9 +9,9 @@ use App\Core\Application;
 class User
 {
     public int $id;
-    public string $username;
-    public string $password;
     public string $email;
+    public string $password;
+    public string $username;
     public string $role;
     private $created_at;
     private $updated_at;
@@ -25,15 +25,17 @@ class User
     public function login(): void
     {
         $db = Database::getInstance();
-        $sql = "SELECT * FROM users WHERE username = :username";
+        $sql = "SELECT * FROM user WHERE email = :email";
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':username', $this->username);
+        $stmt->bindValue(':email', $this->email);
         $stmt->execute();
         $user = $stmt->fetch();
         if ($user) {
             if (password_verify($this->password, $user['password'])) {
                 session_start();
-                Application::$app->session->set('user', $user);
+                Application::$session->set('username', $user->username);
+                Application::$session->set('role', $user->role);
+                Application::$session->set('user', $user);
                 Application::$app->response->redirect('/articles');
             } else {
                 $_SESSION['error'] = "Utilisateur inexistant ou mot de passe incorrect";
@@ -56,7 +58,7 @@ class User
     public function save(): void
     {
         $db = Database::getInstance();
-        $sql = "INSERT INTO users (username, password, email, role, created_at, updated_at) VALUES (:username, :password, :email, :role, :created_at, :updated_at)";
+        $sql = "INSERT INTO user (username, password, email, role, created_at, updated_at) VALUES (:username, :password, :email, :role, :created_at, :updated_at)";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':username', $_POST['username']);
         $stmt->bindValue(':password', password_hash($_POST['password'], PASSWORD_DEFAULT));
@@ -64,9 +66,12 @@ class User
         $stmt->bindValue(':role', 'user');
         $stmt->bindValue(':created_at', date('Y-m-d H:i:s'));
         $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'));
-
-
         $stmt->execute();
+        $user = $stmt->fetch();
+        Application::$session->set('user_id', $user->id);
+        Application::$session->set('username', $user->username);
+        Application::$session->set('role', $user->role);
+        Application::$app->response->redirect('/login');
     }
     /**
      * Get the value of id

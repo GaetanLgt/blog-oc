@@ -10,10 +10,13 @@ class UserRepository
     public static function where($column, $value): ?User
     {
         $db = Database::getInstance();
-        $sql = "SELECT * FROM users WHERE $column = :$column";
+        $sql = "SELECT * FROM user WHERE $column = :$column";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":$column", $value);
         $stmt->execute();
+        if (!$stmt->rowCount()) {
+            return null;
+        }
         $user = $stmt->fetchObject(User::class);
         return $user;
     }
@@ -21,7 +24,7 @@ class UserRepository
     public static function first(): ?User
     {
         $db = Database::getInstance();
-        $sql = "SELECT * FROM users LIMIT 1";
+        $sql = "SELECT * FROM user LIMIT 1";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $user = $stmt->fetchObject(User::class);

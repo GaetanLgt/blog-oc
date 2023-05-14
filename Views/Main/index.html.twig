@@ -9,6 +9,11 @@ MAIN
 {% endblock %}
 
 {% block javascripts %}
+
+{% if session.username %}
+    {{ dump(session.username) }}
+{% endif %}
+
     <script src='./Assets/js/main.js'></script>
  
 {% endblock %}
