@@ -21,10 +21,10 @@
 				<input type="text" class="form-control" id="chapo" name="chapo">
 			</div>
 			<div class="col-md-6 category">
-				<select name="category_id" id="category_id">
-					<option value="" selected disabled>Choisir une catégorie</option>
+				<label for="category_id" class="form-label">Catégorie</label>
+				<select id="category_id" name="category_id" class="form-select">
 					{% for category in categories %}
-						<option name="category_id" value="{{ category.id }}">{{ category.name }}</option>
+						<option value="{{ category.id }}">{{ category.name }}</option>
 					{% endfor %}
 				</select>
 			</div>

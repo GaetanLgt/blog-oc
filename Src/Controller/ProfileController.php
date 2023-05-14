@@ -19,7 +19,8 @@ class ProfileController extends Controller
 
     public function checkAccess(): void
     {
-        if (!isset($_SESSION['username'])) {
+        $username = Application::$session->get('username');
+        if (!isset($username)) {
             Application::$app->response->redirect('/login');
         }
     }

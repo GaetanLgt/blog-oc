@@ -21,11 +21,33 @@ class UserRepository
         return $user;
     }
 
+    public function findOne($id): ?User
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT * FROM user WHERE id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $user = $stmt->fetchObject(User::class);
+        return $user;
+    }
+
     public static function first(): ?User
     {
         $db = Database::getInstance();
         $sql = "SELECT * FROM user LIMIT 1";
         $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $user = $stmt->fetchObject(User::class);
+        return $user;
+    }
+
+    public function findById($id): ?User
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT * FROM user WHERE id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id);
         $stmt->execute();
         $user = $stmt->fetchObject(User::class);
         return $user;

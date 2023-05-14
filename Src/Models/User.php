@@ -5,6 +5,7 @@ namespace App\Models;
 use DateTime;
 use App\Core\Database;
 use App\Core\Application;
+use App\Repository\UserRepository;
 
 class User
 {
@@ -68,6 +69,9 @@ class User
         $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'));
         $stmt->execute();
         $user = $stmt->fetch();
+        $user_id = $db->lastInsertId();
+        $userRepository = new UserRepository;
+        $user = $userRepository->findOne($user_id);
         Application::$session->set('user_id', $user->id);
         Application::$session->set('username', $user->username);
         Application::$session->set('role', $user->role);

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Core\Application;
 use PDO;
 use Exception;
 use App\Core\Database;
@@ -60,28 +61,42 @@ class ArticleRepository
             if (!in_array($extension, $allowedExtensions)) {
                 throw new Exception('Le fichier doit être une image');
             }
-            if ($_FILES['image']['size'] > 1000000) {
+            if ($_FILES['image']['size'] > 10000000) {
                 throw new Exception('Le fichier ne doit pas dépasser 1Mo');
             }
             $filename = uniqid() . '.' . $extension;
-            move_uploaded_file($_FILES['image']['tmp_name'], 'uploads/' . $filename);
+            move_uploaded_file($_FILES['image']['tmp_name'], 'Assets/images/' . $filename);
+            
             $_POST['image'] = $filename;
         } else {
             $_POST['image'] = '';
         }
+        $category_id = intval($_POST['category_id']);
+        $author_id = intval($_POST['author_id']);
+        $categorie = new CategoryRepository();
+        $author = new UserRepository();
+        $category = $categorie->findById($category_id);
+        $author = $author->findById($author_id);
+        if (!$category) {
+            throw new Exception('La catégorie n\'existe pas');
+        }
+        if (!$author) {
+            throw new Exception('L\'auteur n\'existe pas');
+        }
+
         $db = Database::getInstance();
         $sql = "INSERT INTO article (author_id, category_id, title, chapo, slug, content, image, is_published, created_at, updated_at) VALUES (:author_id, :category_id, :title, :chapo, :slug, :content, :image, :is_published, :created_at, :updated_at)";
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':author_id', $_POST['author_id']);
-        $stmt->bindValue(':category_id', $_POST['category_id']);
+        $stmt->bindValue(':author_id', $author->getId());
+        $stmt->bindValue(':category_id', $category->getId());
         $stmt->bindValue(':title', $_POST['title']);
         $stmt->bindValue(':chapo', $_POST['chapo']);
         $stmt->bindValue(':slug', $_POST['slug']);
         $stmt->bindValue(':content', $_POST['content']);
         $stmt->bindValue(':image', $_POST['image']);
         $stmt->bindValue(':is_published', $_POST['is_published']? 1 : 0);
-        $stmt->bindValue(':created_at', new \DateTime('now', new \DateTimeZone('Europe/Paris')));
-        $stmt->bindValue(':updated_at', new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+        $stmt->bindValue(':created_at', date('now'));
+        $stmt->bindValue(':updated_at', date('now'));
         $stmt->execute();
     }
 
