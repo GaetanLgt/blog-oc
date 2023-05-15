@@ -12,8 +12,9 @@
 
 		{% endif %}
 		<h1>{{ article.title }}</h1>
+		<h2>{{ category }}</h2>
 		<p class="text-muted">écrit par
-			{{ article.author }}
+			{{ author }}
 			le
 			{{ article.publishedAt| date("d m Y H:i:sA", "Europe/Paris") }}</p>
 		<div class="container">

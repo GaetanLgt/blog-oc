@@ -1,57 +1,50 @@
-body{
-    background-color: #f8f9fa !important;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #292b2c;
+@import url('https://fonts.googleapis.com/css?family=Poppins:wght@300,400,500,600,700,800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.card {
-    margin-bottom: 30px;
-    border: 1px solid rgba(0,0,0,.125);
-    border-radius: .25rem;
-    background-color: #fff;
+body {
+  position: relative;
+    background: #f9f9f9f9;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* decoration de la navbar en style css  */
-.navbar {
-    background-color: #fff;
-    border-bottom: 1px solid rgba(0,0,0,.125);
-    border-radius: 0;
-    color: #292b2c;
-    margin-bottom: 30px;
+header {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  padding: 30px 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
 }
 
-.navbar .navbar-brand {
-    color: #292b2c;
-    font-size: 20px;
-    font-weight: 700;
-    text-transform: uppercase;
+header .logo {
+  font-size: 2rem;
+  color: #359381;
+  pointer-events: none;
 }
 
-.navbar .navbar-brand span {
-    color: #007bff;
+.navigation a {
+  color: #359381;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-left: 40px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 6px 15px;
+  border-radius: 20px;
+  margin: 0 10px;
 }
 
-.navbar .navbar-nav .nav-item .nav-link {
-    color: #292b2c;
-    font-size: 16px;
-    font-weight: 400;
-    text-transform: uppercase;
-    padding: 10px 15px;
-}
-
-.navbar .navbar-nav .nav-item .nav-link:hover {
-    color: #007bff;
-}
-
-/* animation au survol du li avec animation d'un souligné sous les elements de la nav item de gauche à droite */
-.nav-item:hover::after {
-    content: '';
-    display: block;
-    border-bottom: 3px solid lightblue;
-    width: 100%;
-    transform: scaleX(1);
-    transition: transform 250ms ease-in-out;
+.navigation a:hover {
+  background: #359381;
+  color: #fff;
 }

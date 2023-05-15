@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Core\Request;
+use App\Core\Response;
 use App\Models\Article;
 use App\Core\Controller;
 use App\Core\Application;
-use App\Core\Response;
+use App\Repository\UserRepository;
 use App\Repository\ArticleRepository;
-use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
+use App\Repository\CategoryRepository;
 
 class ArticlesController extends Controller
 {
@@ -27,7 +28,13 @@ class ArticlesController extends Controller
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);
-
+        $author = $article->getAuthor_id();
+        $authorRepository = new UserRepository();
+        $author = $authorRepository->findById($author);
+        $author = $author->getUsername();
+        $categoryRepository = new CategoryRepository();
+        $category = $categoryRepository->findById($article->getCategorty_id());
+        $category = $category->getName();
         if (!$article) {
             // Si l'article n'existe pas, afficher une erreur 404
             $controller = new Controller();
@@ -37,7 +44,7 @@ class ArticlesController extends Controller
         $comments = $commentRepository->findAll($id);
 
 
-        return $this->twig->display('Articles/show.html.twig', ['article' => $article, 'comments' => $comments]);
+        return $this->twig->display('Articles/show.html.twig', ['article' => $article, 'comments' => $comments, 'author' => $author, 'category' => $category]);
     }
 
 

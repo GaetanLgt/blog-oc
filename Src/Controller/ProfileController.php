@@ -13,7 +13,7 @@ class ProfileController extends Controller
     {
         $this->checkAccess();
         $articleRepository = new ArticleRepository();
-        $articles = $articleRepository->findBy('author_id', Application::$session->get('user_id'));
+        $articles = $articleRepository->findAllBy('author_id', Application::$session->get('user_id'));
         return $this->renderView('Profil/index.html.twig', ['articles' => $articles]);
     }
 
