@@ -1,62 +1,80 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Articles
+	Article
 {% endblock %}
 
 {% block body %}
-
-	<div class="container">
-		{% if article.image %}
-			<img src="Assets/images/{{ article.image }}" alt="{{ article.title }}" class="img-fluid">
-
-		{% endif %}
-		<h1>{{ article.title }}</h1>
-		<h2>{{ category }}</h2>
-		<p class="text-muted">écrit par
-			{{ author }}
-			le
-			{{ article.publishedAt| date("d m Y H:i:sA", "Europe/Paris") }}</p>
+	<div
+		class="content">
+		<!-- affiche un article -->
 		<div class="container">
-			<p>{{ article.content }}</p>
-		</div>
-		<div>
-			{% if comments is not empty %}
-				<h2>Commentaires</h2>
-				{% for comment in comments %}
-					<div class="card">
-						<div class="card-header">
-							Commentaire de
-							{{ comment.author }}
-							le
-							{{ comment.publishedAt| date("d m Y H:i:sA", "Europe/Paris") }}
-						</div>
-						<div class="card-body">
-							{{ comment.content }}
-						</div>
+			<h2>vous avez choisi l'article
+				{{ article.id }}</h2>
+			<div
+				class="row">
+				<!-- affiche l'image de l'article si il y en a une -->
+				{% if article.image %}
+					<div class="col-md-4">
+						<img src="Assets/images/{{ article.image }}" alt="{{ article.title }}" class="img-fluid">
 					</div>
-				{% endfor %}
-			{% endif %}
-		</div>
-
-		{% if session.user is not empty %}
-			<div>
-				<h2>
-					Ajouter un commentaire</h2>
-				<form action="/comment?id={{ article.id }}" method="post">
-					<div class="form-group">
-						<label for="content">Commentaire</label>
-						<textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
-					</div>
-					<button type="submit" class="btn btn-primary">Envoyer</button>
-					<div class="form-group invisible">
-						<label for="author">Auteur</label>
-						<input type="text" name="author" id="author" class="form-control" value="{{ session.username }}">
-						<label for="article">Article</label>
-						<input type="text" name="article" id="article" class="form-control" value="{{ article.id }}">
-					</div>
-				</form>
+				{% endif %}
+				<div class="col-md-4 text-center mx-auto ">
+					<h1 class="py-3 bolder">{{ article.title }}</h1>
+					<p class="text-muted">Ecrit par
+						{{ author }}</p>
+					<p>{{ article.update_at|date('d/m/Y') }}</p>
+					<h3>{{ article.category }}</h3>
+				</div>
+				<p>{{ article.content }}</p>
 			</div>
+			<!-- affiche les commentaires de l'article -->
+			<div class="row">
+				{% if comments is defined %}
+					<div class="col-md-8 mx-auto">
+						<h2>Commentaires</h2>
+						{% for comment in comments %}
+							{% if comment.isPublished == 1 or session.role == 'admin' %}
+								<div class="card my-3">
+									<div class="card-header">
+										<h3>{{ comment.username }}</h3>
+										<p>{{ comment.update_at|date('d/m/Y') }}</p>
+									</div>
+									<div class="card-body">
+										<p>{{ comment.content }}</p>
+									</div>
+								</div>
+								{% if session.role == 'admin' %}
+									{% if comment.isPublished == 0 %}
+									<a href="/publishComment?id={{ comment.id }}" class="btn btn-outline-primary">Publier</a>			
+									{% endif %}
+								
+									<a href="/supprimercomment?id={{ comment.id }}" class="btn btn-outline-danger">Supprimer</a>
+								{% endif %}
+
+							{% endif %}
+
+						{% endfor %}
+					</div>
+				{% else %}
+					<p>Il n'y a pas encore de commentaire pour cet article</p>
+				{% endif %}
+			</div>
+			<!-- formulaire pour ajouter un commentaire -->
+			{% if session.user_id is not empty %}
+				<form method="post" action="/comment?id={{article.id}}">
+					<div>
+						<label for="author">Auteur</label>
+						<input type="text" id="author" name="author_id" class="form-control" value="{{ session.user_id }}"></input>
+				</div>
+				<div>
+					<label for="content">Commentaire</label>
+					<textarea id="content" name="content" class="form-control"></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">Ajouter un commentaire</button>
+			</form>
+		{% else %}
+			<p>Vous devez être connecté pour ajouter un commentaire</p>
 		{% endif %}
 	</div>
 {% endblock %}

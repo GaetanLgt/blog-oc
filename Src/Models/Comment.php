@@ -3,24 +3,28 @@
 namespace App\Models;
 
 use DateTime;
+use App\Repository\UserRepository;
 
 class Comment
 {
     public int $id;
     public string $content;
     public int $author_id;
+    public string $username;
     public int $article_id;
     public datetime $created_at;
     public bool $is_published;
 
-    public function __construct(int $id, string $content, int $author_id, int $article_id)
+    public function __construct(int $id, string $content, int $author_id, int $article_id,bool $is_published = false)
     {
         $this->id = $id;
         $this->content = $content;
         $this->author_id = $author_id;
+        $author = new UserRepository();
+        $this->username = $author->getUsername($author_id);
         $this->article_id = $article_id;
         $this->created_at = new DateTime('now', new \DateTimeZone('Europe/Paris'));
-        $this->is_published = false;
+        $this->is_published = $is_published;
     }
 
     /**
@@ -139,6 +143,26 @@ class Comment
     public function setIsPublished($is_published)
     {
         $this->is_published = $is_published;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of username
+     */ 
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set the value of username
+     *
+     * @return  self
+     */ 
+    public function setUsername($username)
+    {
+        $this->username = $username;
 
         return $this;
     }

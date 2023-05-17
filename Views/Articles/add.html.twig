@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Articles</h1>
+<div class="content container">
 	<div class="container">
+	<h1>Articles</h1>
 		<form class="row g-3" method="post" enctype="multipart/form-data">
 			<label for="author_id" class="form-label text-muted">Auteur :
 				{{ session.user_id }}</label>
@@ -49,6 +50,7 @@
 			</div>
 		</form>
 	</div>
+</div>
 {% endblock %}
 
 {% block javascripts %}{% endblock %}

@@ -30,6 +30,13 @@ $app->router->post('/modifier', [ArticlesController::class, 'modifier']);
 $app->router->get('/comment', [CommentController::class, 'add']);
 $app->router->post('/comment', [CommentController::class, 'add']);
 
+$app->router->get('/supprimercomment', [CommentController::class, 'supprimer']);
+
+$app->router->get('/modifiercomment', [CommentController::class, 'modifier']);
+
+$app->router->get('/publishComment', [CommentController::class, 'publish']);
+$app->router->get('/unpublishComment', [CommentController::class, 'unpublish']);
+
 $app->router->get('/publier', [ArticlesController::class, 'publish']);
 
 $app->router->get('/depublier', [ArticlesController::class, 'unpublish']);

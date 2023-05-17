@@ -1,21 +1,181 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-MAIN
+	MAIN
 {% endblock %}
 
 {% block body %}
-   <section class="parallax">
-    <h2 id="text"> < Blog_pro /></h2>
-   </section>
-{% endblock %}
+	<section class="parallax">
+		<img id="hill1" src="Assets/img/header/hill1.png" alt="">
+		<img id="hill2" src="Assets/img/header/hill2.png" alt="">
+		<img id="hill3" src="Assets/img/header/hill3.png" alt="">
+		<img id="hill4" src="Assets/img/header/hill4.png" alt="">
+		<img id="hill5" src="Assets/img/header/hill5.png" alt="">
+		<img id="tree" src="Assets/img/header/tree.png" alt="">
+		<h2 id="text">
+			< Blog_pro/>
+			<p>projet openclassrooms</p>
+		</h2>
+		<img id="leaf" src="Assets/img/header/leaf.png" alt="">
+		<img id="plant" src="Assets/img/header/plant.png" alt="">
+	</section>
+	<section class="sec">
+		<div id="welcome" class="row py-5">
+			<div class="col-md-12 pt-5 mx-auto">
+				<h2 class="text-center">Bienvenue sur mon blog</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<p class="text-center">Vous trouverez ici des articles sur le développement web, le design, le graphisme, le marketing, le référencement, etc.</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<p class="text-center">Vous pouvez également vous inscrire pour pouvoir commenter les articles.</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<p class="text-center">Bonne visite !</p>
+			</div>
+		</div>
+	</section>
+	<div style="overflow: hidden;">
+		<svg preserveaspectratio="none" viewbox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" style="fill: #003329; width: 100%; height: 180px;">
+			<path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z" opacity=".25"/>
+			<path d="M0 0v15.81c13 21.11 27.64 41.05 47.69 56.24C99.41 111.27 165 111 224.58 91.58c31.15-10.15 60.09-26.07 89.67-39.8 40.92-19 84.73-46 130.83-49.67 36.26-2.85 70.9 9.42 98.6 31.56 31.77 25.39 62.32 62 103.63 73 40.44 10.79 81.35-6.69 119.13-24.28s75.16-39 116.92-43.05c59.73-5.85 113.28 22.88 168.9 38.84 30.2 8.66 59 6.17 87.09-7.5 22.43-10.89 48-26.93 60.65-49.24V0z" opacity=".5"/>
+			<path d="M0 0v5.63C149.93 59 314.09 71.32 475.83 42.57c43-7.64 84.23-20.12 127.61-26.46 59-8.63 112.48 12.24 165.56 35.4C827.93 77.22 886 95.24 951.2 90c86.53-7 172.46-45.71 248.8-84.81V0z"/>
+		</svg>
+	</div>
+	<section
+		id="projets">
+		<!-- les projets réalisés sous formes de cards -->
+		<div class="container py-5">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="text-center">Projets</h2>
+				</div>
+			</div>
+			<div class="cards">
+				<div class="card">
+					<div class="card-header">
+						<h3>Projet 1</h3>
+					</div>
+					<div class="card-body">
+						<p>Projet 1</p>
+					</div>
+					<div class="card-footer">
+						<a href="#">Lien</a>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						<h3>Projet 2</h3>
+					</div>
+					<div class="card-body">
+						<p>Projet 2</p>
 
-{% block javascripts %}
+					</div>
+					<div class="card-footer">
+						<a href="#">Lien</a>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						<h3>Projet 3</h3>
+					</div>
+					<div class="card-body">
+						<p>Projet 3</p>
 
-{% if session.username %}
-    {{ dump(session.username) }}
-{% endif %}
+					</div>
+					<div class="card-footer">
+						<a href="#">Lien</a>
+					</div>
+				</div>
+			</div>
+			<div class="cards">
+				<div class="card">
+					<div class="card-header">
+						<h3>Projet 4</h3>
+					</div>
+					<div class="card-body">
+						<p>Projet 4</p>
+					</div>
+					<div class="card-footer">
+						<a href="#">Lien</a>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						<h3>Projet 5</h3>
+					</div>
+					<div class="card-body">
+						<p>Projet 5</p>
 
-    <script src='./Assets/js/main.js'></script>
- 
-{% endblock %}
+					</div>
+					<div class="card-footer">
+						<a href="#">Lien</a>
+					</div>
+				</div>
+
+			</section>
+			<div style="overflow: hidden;">
+				<svg preserveaspectratio="none" viewbox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" style="fill: #003329; width: 100%; height: 97px; transform: rotate(180deg);">
+					<path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z" opacity=".25"/>
+					<path d="M0 0v15.81c13 21.11 27.64 41.05 47.69 56.24C99.41 111.27 165 111 224.58 91.58c31.15-10.15 60.09-26.07 89.67-39.8 40.92-19 84.73-46 130.83-49.67 36.26-2.85 70.9 9.42 98.6 31.56 31.77 25.39 62.32 62 103.63 73 40.44 10.79 81.35-6.69 119.13-24.28s75.16-39 116.92-43.05c59.73-5.85 113.28 22.88 168.9 38.84 30.2 8.66 59 6.17 87.09-7.5 22.43-10.89 48-26.93 60.65-49.24V0z" opacity=".5"/>
+					<path d="M0 0v5.63C149.93 59 314.09 71.32 475.83 42.57c43-7.64 84.23-20.12 127.61-26.46 59-8.63 112.48 12.24 165.56 35.4C827.93 77.22 886 95.24 951.2 90c86.53-7 172.46-45.71 248.8-84.81V0z"/>
+				</svg>
+			</div>
+			<section id="contact">
+				<div class="container pt-5">
+					<div class="row">
+						<div class="col-md-12">
+							<h2 class="text-center">Contact</h2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<p class="text-center">Vous pouvez me contacter par mail à l'adresse suivante :
+								<a href="mailto:gtn.langlet@gmail.com">
+									gtn.langlet@gmail.com</a>
+								ou par ce formulaire :</p>
+							<!-- formulaire de contact -->
+							<form method="post" class="pt-5">
+								<div class="row">
+
+									<div class="col-md-6">
+										<label for="name" class="form-label">Nom :</label>
+										<input type="text" id="name" class="form-control" name="name" placeholder="Votre nom" required>
+									</div>
+									<div class="col-md-6">
+										<label for="email" class="form-label">Email :</label>
+										<input type="email" id="email" class="form-control" name="email" placeholder="Votre email" required>
+									</div>
+								</div>
+								<div class="w-100 py-3">
+									<label for="message" class="form-label">Message :</label>
+									<textarea id="message" class="form-control" name="message" placeholder="Votre message" rows="5" required></textarea>
+								</div>
+								<div class="button">
+									<button class="btn btn-secondary" type="submit">Envoyer</button>
+								</div>
+
+							</form>
+						</div>
+
+					</div>
+
+				</div>
+			</section>
+
+		{% endblock %}
+
+		{% block javascripts %}
+
+			{% if session.username %}
+			{% endif %}
+
+			<script src='./Assets/js/main.js'></script>
+
+		{% endblock %}

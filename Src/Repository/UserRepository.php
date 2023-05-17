@@ -52,4 +52,15 @@ class UserRepository
         $user = $stmt->fetchObject(User::class);
         return $user;
     }
+
+    public function getUsername($author_id): string
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT username FROM user WHERE id = :author_id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':author_id', $author_id);
+        $stmt->execute();
+        $username = $stmt->fetch();
+        return $username['username'];
+    }
 }

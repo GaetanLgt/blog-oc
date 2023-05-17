@@ -17,7 +17,7 @@ class CommentController extends Controller
         $this->commentRepository = new CommentRepository();
     }
 
-    public function add(): void
+    public function add()
     {
         $id = $_GET['id'] ?? null; // Vérifier si l'ID de l'article est défini
         if ($id !== null && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,6 +39,14 @@ class CommentController extends Controller
         $id = $_GET['id'] ?? null; // Vérifier si l'ID du commentaire est défini
         if ($id !== null) {
             $this->commentRepository->delete($id);
+        }
+        Application::$app->response->redirect('/articles');
+    }
+
+    public function publish() {
+        $id = $_GET['id'] ?? null; // Vérifier si l'ID du commentaire est défini
+        if ($id !== null) {
+            $this->commentRepository->setIsPublished($id);
         }
         Application::$app->response->redirect('/articles');
     }

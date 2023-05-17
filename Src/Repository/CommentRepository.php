@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Core\Application;
 use App\Core\Database;
 use App\Models\Comment;
 
@@ -28,7 +29,7 @@ class CommentRepository
         $stmt->bindValue(':content', $_POST['content']);
         $stmt->bindValue(':author_id', $_POST['author_id']);
         $stmt->bindValue(':article_id', $_POST['article_id']);
-        $stmt->bindValue(':is_published', $_POST['is_published']);
+        $stmt->bindValue(':is_published', false );
         $stmt->bindValue(':created_at', $_POST['created_at']);
         $stmt->execute();
     }
@@ -39,7 +40,8 @@ class CommentRepository
             $data['id'],
             $data['content'],
             $data['author_id'],
-            $data['article_id']
+            $data['article_id'],
+            $data['is_published']
         );
     }
 
@@ -55,13 +57,14 @@ class CommentRepository
     public function save(Comment $comment): void
     {
         $db = Database::getInstance();
-        $sql = "INSERT INTO comment (content, author_id, article_id, is_published, created_at) VALUES (:content, :author_id, :article_id, :is_published, :created_at)";
+        $sql = "INSERT INTO comment (content, author_id, article_id, is_published, created_at,username) VALUES (:content, :author_id, :article_id, :is_published, :created_at,:username)";
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':content', $comment->content);
         $stmt->bindValue(':author_id', $comment->author_id);
         $stmt->bindValue(':article_id', $comment->article_id);
-        $stmt->bindValue(':is_published', $comment->is_published);
-        $stmt->bindValue(':created_at', $comment->created_at);
+        $stmt->bindValue(':is_published', ($comment->is_published) ? 0 : 1);
+        $stmt->bindValue(':created_at', date('Y-m-d H:i:s'));
+        $stmt->bindValue(':username', Application::$session->get('username'));
         $stmt->execute();
     }
 
@@ -91,6 +94,18 @@ class CommentRepository
         return $this->hydrate($data);
     }
 
+    public function findAllByArticle($article_id){
+        $db = Database::getInstance();
+        $stmt = $db->prepare('SELECT * FROM comment WHERE article_id = :article_id');
+        $stmt->execute(['article_id' => $article_id]);
+        $commentData = $stmt->fetchAll();
+        $comment = [];
+        foreach ($commentData as $data) {
+            $comment[] = $this->hydrate($data);
+        }
+        return $comment;
+    }
+
     public function deleteAll(int $article_id): void
     {
         $db = Database::getInstance();
@@ -100,7 +115,7 @@ class CommentRepository
         $stmt->execute();
     }
 
-    public function publish(int $id): void
+    public function setIsPublished(int $id): void
     {
         $db = Database::getInstance();
         $sql = "UPDATE comment SET is_published = 1 WHERE id = :id";
@@ -163,4 +178,15 @@ class CommentRepository
         return $count;
     }
 
+    public function findAllPublishedByArticle($article_id){
+        $db = Database::getInstance();
+        $stmt = $db->prepare('SELECT * FROM comment WHERE article_id = :article_id AND is_published = 1');
+        $stmt->execute(['article_id' => $article_id]);
+        $commentData = $stmt->fetchAll();
+        $comment = [];
+        foreach ($commentData as $data) {
+            $comment[] = $this->hydrate($data);
+        }
+        return $comment;
+    }
 }

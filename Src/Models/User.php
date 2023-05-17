@@ -212,7 +212,7 @@ class User
      */
     public function setUpdatedAt($updated_at): self
     {
-        $this->updated_at = $updated_at;
+        $this->updated_at = new Datetime(date('Y-m-d H:i:s'));
 
         return $this;
     }

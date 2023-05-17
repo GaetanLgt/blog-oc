@@ -78,4 +78,3 @@ Ce projet a été réalisé par GaetanLgt, dans le cadre de la formation Opencla
 ## License
 
 Ce projet est sous license [MIT](LICENSE).
-

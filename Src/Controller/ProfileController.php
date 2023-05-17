@@ -11,7 +11,10 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $this->checkAccess();
+        $user = Application::$session->get('username');
+        if (empty($user)) {
+            Application::$app->response->redirect('/login');
+        }
         $articleRepository = new ArticleRepository();
         $articles = $articleRepository->findAllBy('author_id', Application::$session->get('user_id'));
         return $this->renderView('Profil/index.html.twig', ['articles' => $articles]);

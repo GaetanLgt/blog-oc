@@ -1,9 +1,37 @@
-<header>
+<header id="top">
 	<h2 class="logo">Logo</h2>
 	<nav class="navigation">
-		<a href="/">Home</a>
-		<a href="/#about">About Us</a>
-		<a href="/articles">Blog</a>
-		<a href="/#contact">Contact Us</a>
+		{% if active is empty %}
+			{% set active = "home" %}
+		{% endif %}
+		{% if active == "home" %}
+			<a href="/" class="active">Home</a>
+			{% else %}
+			<a href="/">Home</a>
+		{% endif %}
+		{% if active == "projet" %}
+			<a href="/#projets" class="active">Projet</a>
+			{% else %}
+			<a href="/#projets">Projet</a>
+		{% endif %}
+		{% if active == "contact" %}
+			<a href="/#contact" class="active">Contact Us</a>
+			{% else %}
+			<a href="/#contact">Contact Us</a>
+		{% endif %}
+		{% if active == "blog" %}
+			<a href="/articles" class="active">Blog</a>
+			{% else %}
+			<a href="/articles">Blog</a>
+		{% endif %}
+		
 	</nav>
+
+	{% if session.username %}
+		<a href="/profil" class="btn btn-primary">Welcome, {{ session.username }}</a>
+		<a href="/ajouter" class="btn btn-success">Create Article</a>
+		<a href="/logout" class="btn btn-danger">Logout</a>
+	{% else %}
+		<a href="/login" class="btn btn-info">Login</a>
+	{% endif %}
 </header>

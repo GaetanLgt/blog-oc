@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Se connecter</h1>
+<div class="content">
     <div class="container">
+	<h1>Se connecter</h1>
 	<form class="row g-3" method="post">
 		<div class="col-md-6">
 			<label for="email" class="form-label">E-mail</label>
@@ -14,16 +15,18 @@
 		</div>
 		<div class="col-md-6">
 			<label for="password" class="form-label">Mot de passe</label>
-			<input type="password" class="form-control" id="password" name="password">
+			<input type="password" class="form-control" id="password" name="password"></input>
+		</div>
 		<div class="col-12">
-			<button type="submit" class="btn btn-primary">M'identifier</button>
             <a href="/register" class="btn btn-secondary">Pas encore inscrit ?</a>
+			<button type="submit" class="btn btn-primary">M'identifier</button>
             
 		</div>
         <div>
         </div>
 	</form>
     </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}

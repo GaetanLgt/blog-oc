@@ -56,7 +56,7 @@ class Article
     /**
      * Get the value of author_id
      */ 
-    public function getAuthor_id()
+    public function getAuthorId()
     {
         return $this->author_id;
     }
@@ -66,7 +66,7 @@ class Article
      *
      * @return  self
      */ 
-    public function setAuthor_id($author_id)
+    public function setAuthorId($author_id)
     {
         $this->author_id = $author_id;
 
@@ -76,7 +76,7 @@ class Article
     /**
      * Get the value of categorty_id
      */ 
-    public function getCategorty_id()
+    public function getCategortyId()
     {
         return $this->categorty_id;
     }
@@ -86,7 +86,7 @@ class Article
      *
      * @return  self
      */ 
-    public function setCategorty_id($categorty_id)
+    public function setCategortyId($categorty_id)
     {
         $this->categorty_id = $categorty_id;
 
@@ -228,7 +228,7 @@ class Article
      */ 
    public function setCreatedAt($created_at)
    {
-       $this->created_at = new DateTime('now', new \DateTimeZone('Europe/Paris'));
+       $this->created_at = $created_at ;
 
        return $this;
    }
@@ -236,7 +236,7 @@ class Article
     /**
      * Get the value of updated_at
      */ 
-    public function getUpdated_at()
+    public function getUpdatedAt()
     {
         return $this->updated_at;
     }
@@ -246,9 +246,9 @@ class Article
      *
      * @return  self
      */ 
-    public function setUpdated_at($updated_at)
+    public function setUpdatedAt($updated_at)
     {
-        $this->updated_at = $updated_at;
+        $this->updated_at = new DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         return $this;
     }

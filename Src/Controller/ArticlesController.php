@@ -15,12 +15,18 @@ use App\Repository\CategoryRepository;
 class ArticlesController extends Controller
 {
     private ArticleRepository $articleRepository;
-
+    
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index()
     {
+        $active = 'blog';
         $this->articleRepository = new ArticleRepository();
         $articles = $this->articleRepository->getPublishedArticles();
-        return $this->twig->display('Articles/index.html.twig', ['articles' => $articles]);
+        return $this->twig->display('Articles/index.html.twig', ['articles' => $articles, 'active' => $active]);
     }
 
     public function show()
@@ -28,12 +34,12 @@ class ArticlesController extends Controller
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);
-        $author = $article->getAuthor_id();
+        $author = $article->getAuthorId();
         $authorRepository = new UserRepository();
         $author = $authorRepository->findById($author);
         $author = $author->getUsername();
         $categoryRepository = new CategoryRepository();
-        $category = $categoryRepository->findById($article->getCategorty_id());
+        $category = $categoryRepository->findById($article->getCategortyId());
         $category = $category->getName();
         if (!$article) {
             // Si l'article n'existe pas, afficher une erreur 404
@@ -41,8 +47,12 @@ class ArticlesController extends Controller
             return $controller->renderView('_404/index.html.twig');
         }
         $commentRepository = new CommentRepository();
-        $comments = $commentRepository->findAll($id);
-
+        if( Application::$session->get('role') === 'admin') {
+            $comments = $commentRepository->findAllByArticle($id);
+        } else {
+            // Récupérer les commentaires publiés (is_published = true
+            $comments = $commentRepository->findAllPublishedByArticle($id);
+        }
 
         return $this->twig->display('Articles/show.html.twig', ['article' => $article, 'comments' => $comments, 'author' => $author, 'category' => $category]);
     }
@@ -52,6 +62,9 @@ class ArticlesController extends Controller
     {
         if (!isset($_SESSION['username'])) {
             Application::$app->response->redirect('/login');
+        }
+        if (Application::$session->get('role') !== 'admin') {
+            Application::$app->response->redirect('/profil');
         }
         $categories = [];
         $categoriesRepository = new CategoryRepository();
@@ -84,8 +97,8 @@ class ArticlesController extends Controller
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);
-        $author = $article->getAuthor_id();
-        if ($author != $_SESSION['username'] || $_SESSION['role'] !== 'admin') {
+        $author = $article->getAuthorId();
+        if ($author !== Application::$session->get('username') || Application::$session->get('role') !== 'admin') {
             Application::$app->response->redirect('/profil');
         }
         $this->articleRepository->delete($id);
@@ -102,7 +115,7 @@ class ArticlesController extends Controller
             $article->setChapo(trim($_POST['chapo']));
             $article->setImage(trim($_POST['image']));
             $article->setContent(trim($_POST['content']));
-            $article->setAuthor_id(trim($_POST['author']));
+            $article->setAuthorId(trim($_POST['author']));
             $article->setIsPublished(trim($_POST['is_published']) ?? false);
             $this->articleRepository->update();
             Application::$app->response->redirect('/articles');
