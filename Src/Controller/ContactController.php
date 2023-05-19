@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\SMTP;
 
 class ContactController extends Controller
 {
-    public function index()
+    public function index(): void
     {
         $mail = new PHPMailer(true);
         try {
@@ -36,8 +36,10 @@ class ContactController extends Controller
         
             $mail->send();
             echo 'Message has been sent';
+            Application::$app->response->redirect('/articles');
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+
         }
     }
 }

@@ -7,8 +7,8 @@ use App\Core\Response;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(): string
     {
-        return $this->renderView('Main/index.html.twig');
+        return $this->twig->render('Main/index.html.twig');
     }
 }

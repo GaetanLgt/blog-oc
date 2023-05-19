@@ -21,15 +21,15 @@ class ArticlesController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(): string
     {
         $active = 'blog';
         $this->articleRepository = new ArticleRepository();
         $articles = $this->articleRepository->getPublishedArticles();
-        return $this->twig->display('Articles/index.html.twig', ['articles' => $articles, 'active' => $active]);
+        return $this->twig->render('Articles/index.html.twig', ['articles' => $articles, 'active' => $active]);
     }
 
-    public function show()
+    public function show(): string
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
@@ -42,9 +42,7 @@ class ArticlesController extends Controller
         $category = $categoryRepository->findById($article->getCategortyId());
         $category = $category->getName();
         if (!$article) {
-            // Si l'article n'existe pas, afficher une erreur 404
-            $controller = new Controller();
-            return $controller->renderView('_404/index.html.twig');
+            return $this->twig->render('_404/index.html.twig');
         }
         $commentRepository = new CommentRepository();
         if( Application::$session->get('role') === 'admin') {
@@ -58,7 +56,7 @@ class ArticlesController extends Controller
     }
 
 
-    public function add()
+    public function add(): void
     {
         if (!isset($_SESSION['username'])) {
             Application::$app->response->redirect('/login');
@@ -105,7 +103,7 @@ class ArticlesController extends Controller
         Application::$app->response->redirect('/articles');
     }
 
-    public function modifier()
+    public function modifier(): void
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();

@@ -17,7 +17,7 @@ class CommentController extends Controller
         $this->commentRepository = new CommentRepository();
     }
 
-    public function add()
+    public function add(): void
     {
         $id = $_GET['id'] ?? null; // Vérifier si l'ID de l'article est défini
         if ($id !== null && $_SERVER['REQUEST_METHOD'] === 'POST') {
