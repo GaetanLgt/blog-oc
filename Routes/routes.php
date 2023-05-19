@@ -4,6 +4,7 @@ use App\Controller\HomeController;
 use App\Controller\CommentController;
 use App\Controller\ProfileController;
 use App\Controller\ArticlesController;
+use App\Controller\ContactController;
 
 $app->router->get('/', [HomeController::class, 'index']);
 
@@ -42,3 +43,6 @@ $app->router->get('/publier', [ArticlesController::class, 'publish']);
 $app->router->get('/depublier', [ArticlesController::class, 'unpublish']);
 
 $app->router->get('/profil', [ProfileController::class, 'index']);
+
+$app->router->get('/contact', [ContactController::class, 'index']);
+$app->router->post('/contact', [ContactController::class, 'index']);

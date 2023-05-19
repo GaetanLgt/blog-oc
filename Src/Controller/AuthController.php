@@ -13,12 +13,12 @@ class AuthController extends Controller
 {
     public function login()
     {
-        return $this->renderView('Auth/login.html.twig');
+        return $this->twig->render('Auth/login.html.twig');
     }
 
     public function register()
     {
-        return $this->renderView('Auth/register.html.twig');
+        return $this->twig->render('Auth/register.html.twig');
     }
 
     public function handleLogin()
@@ -28,12 +28,12 @@ class AuthController extends Controller
         $password = trim($_POST['password']);
         $user = UserRepository::where('email', $email);
         if (!$user) {
-            return $this->renderView('Auth/login.html.twig', [
+            return $this->twig->render('Auth/login.html.twig', [
                 'errors' => ['email' => 'User does not exist']
             ]);
         }
         if (!password_verify($password, $user->password)) {
-            return $this->renderView('Auth/login.html.twig', [
+            return $this->twig->render('Auth/login.html.twig', [
                 'errors' => ['password' => 'Password is incorrect']
             ]);
         }
@@ -72,7 +72,7 @@ class AuthController extends Controller
             $errors['email'] = 'Email already exists';
         }
         if (!empty($errors)) {
-            return $this->renderView('Auth/register.html.twig', [
+            return $this->twig->render('Auth/register.html.twig', [
                 'errors' => $errors
             ]);
         }
@@ -90,6 +90,8 @@ class AuthController extends Controller
     public function logout()
     {
         unset($_SESSION['user']);
+        unset($_SESSION['username']);
+        unset($_SESSION['role']);
         session_destroy();
         Application::$app->response->redirect('/');
     }
