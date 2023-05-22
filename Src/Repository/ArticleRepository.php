@@ -69,7 +69,7 @@ class ArticleRepository
                     throw new Exception('Le fichier ne doit pas dépasser 100Mo');
                 }
                 $filename = uniqid() . '.' . $extension;
-                move_uploaded_file($_FILES['image']['tmp_name'], 'Assets/images/' . $filename);
+                move_uploaded_file($_FILES['image']['tmp_name'], 'Assets/uploads/' . $filename);
                 $_POST['image'] = $filename;
             } else {
                 $_POST['image'] = '';

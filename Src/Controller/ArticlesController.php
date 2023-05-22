@@ -21,15 +21,15 @@ class ArticlesController extends Controller
      *
      * @return void
      */
-    public function index(): string
+    public function index()
     {
         $active = 'blog';
         $this->articleRepository = new ArticleRepository();
         $articles = $this->articleRepository->getPublishedArticles();
-        return $this->twig->render('Articles/index.html.twig', ['articles' => $articles, 'active' => $active]);
+        return $this->twig->display('Articles/index.html.twig', ['articles' => $articles, 'active' => $active]);
     }
 
-    public function show(): string
+    public function show()
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();
@@ -56,7 +56,7 @@ class ArticlesController extends Controller
     }
 
 
-    public function add(): void
+    public function add()
     {
         if (!isset($_SESSION['username'])) {
             Application::$app->response->redirect('/login');
@@ -103,7 +103,7 @@ class ArticlesController extends Controller
         Application::$app->response->redirect('/articles');
     }
 
-    public function modifier(): void
+    public function modifier()
     {
         $id = $_GET['id'];
         $this->articleRepository = new ArticleRepository();

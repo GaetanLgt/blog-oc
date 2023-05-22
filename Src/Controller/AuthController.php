@@ -11,29 +11,29 @@ use App\Repository\UserRepository;
 
 class AuthController extends Controller
 {
-    public function login(): string
+    public function login()
     {
-        return $this->twig->render('Auth/login.html.twig');
+        return $this->twig->display('Auth/login.html.twig');
     }
 
-    public function register(): string
+    public function register()
     {
-        return $this->twig->render('Auth/register.html.twig');
+        return $this->twig->display('Auth/register.html.twig');
     }
 
-    public function handleLogin(): void
+    public function handleLogin()
     {
 
         $email = trim($_POST['email']);
         $password = trim($_POST['password']);
         $user = UserRepository::where('email', $email);
         if (!$user) {
-            return $this->twig->render('Auth/login.html.twig', [
+            return $this->twig->display('Auth/login.html.twig', [
                 'errors' => ['email' => 'User does not exist']
             ]);
         }
         if (!password_verify($password, $user->password)) {
-            return $this->twig->render('Auth/login.html.twig', [
+            return $this->twig->display('Auth/login.html.twig', [
                 'errors' => ['password' => 'Password is incorrect']
             ]);
         }
@@ -43,7 +43,7 @@ class AuthController extends Controller
         Application::$app->response->redirect('/');
     }
 
-    public function handleRegister(): void
+    public function handleRegister()
     {
         foreach ($_POST as $key => $value) {
             $_POST[$key] = filter_var($value, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -72,7 +72,7 @@ class AuthController extends Controller
             $errors['email'] = 'Email already exists';
         }
         if (!empty($errors)) {
-            return $this->twig->render('Auth/register.html.twig', [
+            return $this->twig->display('Auth/register.html.twig', [
                 'errors' => $errors
             ]);
         }

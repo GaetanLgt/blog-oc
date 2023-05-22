@@ -7,8 +7,8 @@ use App\Core\Response;
 
 class HomeController extends Controller
 {
-    public function index(): string
+    public function index()
     {
-        return $this->twig->render('Main/index.html.twig');
+        return $this->twig->display('Main/index.html.twig');
     }
 }

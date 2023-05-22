@@ -15,22 +15,22 @@ class ContactController extends Controller
         $mail = new PHPMailer(true);
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'gtn.langlet@gmail.com';                     //SMTP username
-            $mail->Password   = 'mzeupojmzkynlwbm';                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'gtn.langlet@gmail.com';
+            $mail->Password   = 'mzeupojmzkynlwbm';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = 465;
 
             //Recipients
             $mail->setFrom('contact@gaetan-langlet.fr', 'Mailer');
-            $mail->addAddress('gtn.langlet@gmail.com', 'Joe User');     //Add a recipient              //Name is optional
+            $mail->addAddress('gtn.langlet@gmail.com', 'Joe User');
             $mail->addReplyTo('no-reply@gaetan-langlet.fr', 'Information');
 
             //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->isHTML(true);
             $mail->Subject = 'Mail de contact du blog ' . Application::$session->get('username');
             $mail->Body = $_POST['message'] . '<br>Envoyé par : ' . $_POST['name'] . '<br>Mail de contact : ' . $_POST['email'];
 
