@@ -9,7 +9,7 @@ use App\Repository\ArticleRepository;
 
 class ProfileController extends Controller
 {
-    public function index(): string
+    public function index()
     {
         $user = Application::$session->get('username');
         if (empty($user)) {
@@ -17,7 +17,7 @@ class ProfileController extends Controller
         }
         $articleRepository = new ArticleRepository();
         $articles = $articleRepository->findAllBy('author_id', Application::$session->get('user_id'));
-        return $this->twig->render('Profil/index.html.twig', ['articles' => $articles]);
+        return $this->twig->display('Profil/index.html.twig', ['articles' => $articles]);
     }
 
     public function checkAccess(): void

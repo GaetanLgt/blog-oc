@@ -61,9 +61,9 @@ class User
         $db = Database::getInstance();
         $sql = "INSERT INTO user (username, password, email, role, created_at, updated_at) VALUES (:username, :password, :email, :role, :created_at, :updated_at)";
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':username', $_POST['username']);
-        $stmt->bindValue(':password', password_hash($_POST['password'], PASSWORD_DEFAULT));
-        $stmt->bindValue(':email', $_POST['email']);
+        $stmt->bindValue(':username', trim($_POST['username']));
+        $stmt->bindValue(':password', password_hash(trim($_POST['password']), PASSWORD_DEFAULT));
+        $stmt->bindValue(':email', trim($_POST['email']));
         $stmt->bindValue(':role', 'user');
         $stmt->bindValue(':created_at', date('Y-m-d H:i:s'));
         $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'));

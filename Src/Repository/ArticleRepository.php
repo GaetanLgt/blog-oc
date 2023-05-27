@@ -74,8 +74,8 @@ class ArticleRepository
             } else {
                 $_POST['image'] = '';
             }
-            $category_id = intval($_POST['category_id']);
-            $author_id = intval($_POST['author_id']);
+            $category_id = intval(trim($_POST['category_id']));
+            $author_id = intval(trim($_POST['author_id']));
             $categoryRepository = new CategoryRepository();
             $authorRepository = new UserRepository();
             $category = $categoryRepository->findById($category_id);
@@ -92,11 +92,11 @@ class ArticleRepository
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':author_id', $author->getId());
             $stmt->bindValue(':category_id', $category->getId());
-            $stmt->bindValue(':title', $_POST['title']);
-            $stmt->bindValue(':chapo', $_POST['chapo']);
-            $stmt->bindValue(':slug', $_POST['slug']);
-            $stmt->bindValue(':content', $_POST['content']);
-            $stmt->bindValue(':image', $_POST['image']);
+            $stmt->bindValue(':title', trim($_POST['title']));
+            $stmt->bindValue(':chapo', trim($_POST['chapo']));
+            $stmt->bindValue(':slug', trim($_POST['slug']));
+            $stmt->bindValue(':content', trim($_POST['content']));
+            $stmt->bindValue(':image', trim($_POST['image']));
             $stmt->bindValue(':is_published', isset($_POST['is_published']) ? 1 : 0);
             $stmt->bindValue(':created_at', date('Y-m-d H:i:s'));
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'));
@@ -109,17 +109,17 @@ class ArticleRepository
         $db = Database::getInstance();
         $sql = "UPDATE article SET author_id = :author_id, category_id = :category_id, title = :title, chapo = :chapo, slug = :slug, content = :content, image = :image, is_published = :is_published, created_at = :created_at, updated_at = :updated_at WHERE id = :id";
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':id', $_POST['id']);
-        $stmt->bindValue(':author_id', $_POST['author_id']);
-        $stmt->bindValue(':category_id', $_POST['category_id']);
-        $stmt->bindValue(':title', $_POST['title']);
-        $stmt->bindValue(':chapo', $_POST['chapo']);
-        $stmt->bindValue(':slug', $_POST['slug']);
-        $stmt->bindValue(':content', $_POST['content']);
+        $stmt->bindValue(':id', trim($_POST['id']));
+        $stmt->bindValue(':author_id', trim($_POST['author_id']));
+        $stmt->bindValue(':category_id', trim($_POST['category_id']));
+        $stmt->bindValue(':title', trim($_POST['title']));
+        $stmt->bindValue(':chapo', trim($_POST['chapo']));
+        $stmt->bindValue(':slug', trim($_POST['slug']));
+        $stmt->bindValue(':content', trim($_POST['content']));
         $stmt->bindValue(':image', $_POST['image']);
-        $stmt->bindValue(':is_published', $_POST['is_published']);
-        $stmt->bindValue(':created_at', $_POST['created_at']);
-        $stmt->bindValue(':updated_at', $_POST['updated_at']);
+        $stmt->bindValue(':is_published', trim($_POST['is_published']));
+        $stmt->bindValue(':created_at', trim($_POST['created_at']));
+        $stmt->bindValue(':updated_at', trim($_POST['updated_at']));
         $stmt->execute();
     }
 
@@ -163,8 +163,8 @@ class ArticleRepository
         $db = Database::getInstance();
         $sql = "UPDATE article SET image = :image WHERE id = :id";
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':id', $_POST['id']);
-        $stmt->bindValue(':image', $_POST['image']);
+        $stmt->bindValue(':id', trim($_POST['id']));
+        $stmt->bindValue(':image', trim($_POST['image']));
         $stmt->execute();
     }
 

@@ -15,7 +15,7 @@ use App\Repository\CategoryRepository;
 class ArticlesController extends Controller
 {
     private ArticleRepository $articleRepository;
-    
+
     /**
      * index
      *
@@ -39,20 +39,24 @@ class ArticlesController extends Controller
         $author = $authorRepository->findById($author);
         $author = $author->getUsername();
         $categoryRepository = new CategoryRepository();
-        $category = $categoryRepository->findById($article->getCategortyId());
+        $category = $categoryRepository->findById($article->getCategoryId());
         $category = $category->getName();
         if (!$article) {
             return $this->twig->render('_404/index.html.twig');
         }
         $commentRepository = new CommentRepository();
-        if( Application::$session->get('role') === 'admin') {
+        if (Application::$session->get('role') === 'admin') {
             $comments = $commentRepository->findAllByArticle($id);
         } else {
             // Récupérer les commentaires publiés (is_published = true
             $comments = $commentRepository->findAllPublishedByArticle($id);
         }
-
-        return $this->twig->display('Articles/show.html.twig', ['article' => $article, 'comments' => $comments, 'author' => $author, 'category' => $category]);
+        return $this->renderView('Articles/show.html.twig', [
+            'article' => $article,
+            'comments' => $comments,
+            'author' => $author,
+            'category' => $category
+        ]);
     }
 
 
@@ -96,7 +100,8 @@ class ArticlesController extends Controller
         $this->articleRepository = new ArticleRepository();
         $article = $this->articleRepository->findById($id);
         $author = $article->getAuthorId();
-        if ($author !== Application::$session->get('username') || Application::$session->get('role') !== 'admin') {
+        if ($author !== Application::$session->get('username') ||
+         Application::$session->get('role') !== 'admin') {
             Application::$app->response->redirect('/profil');
         }
         $this->articleRepository->delete($id);

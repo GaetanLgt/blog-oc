@@ -8,7 +8,7 @@ use Twig\Loader\FilesystemLoader;
 class Controller
 {
     private $loader;
-    protected $twig;
+    public $twig;
 
     public function __construct()
     {

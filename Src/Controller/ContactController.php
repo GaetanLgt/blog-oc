@@ -32,7 +32,7 @@ class ContactController extends Controller
             //Content
             $mail->isHTML(true);
             $mail->Subject = 'Mail de contact du blog ' . Application::$session->get('username');
-            $mail->Body = $_POST['message'] . '<br>Envoyé par : ' . $_POST['name'] . '<br>Mail de contact : ' . $_POST['email'];
+            $mail->Body = trim($_POST['message']) . '<br>Envoyé par : ' . trim($_POST['name']) . '<br>Mail de contact : ' . trim($_POST['email']);
 
             $mail->send();
             echo 'Message has been sent';

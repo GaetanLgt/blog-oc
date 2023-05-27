@@ -26,11 +26,11 @@ class CommentRepository
         $db = Database::getInstance();
         $sql = "INSERT INTO comment (content, author_id, article_id, is_published, created_at) VALUES (:content, :author_id, :article_id, :is_published, :created_at)";
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':content', $_POST['content']);
-        $stmt->bindValue(':author_id', $_POST['author_id']);
-        $stmt->bindValue(':article_id', $_POST['article_id']);
+        $stmt->bindValue(':content', trim($_POST['content']));
+        $stmt->bindValue(':author_id', trim($_POST['author_id']));
+        $stmt->bindValue(':article_id', trim($_POST['article_id']));
         $stmt->bindValue(':is_published', false );
-        $stmt->bindValue(':created_at', $_POST['created_at']);
+        $stmt->bindValue(':created_at', trim($_POST['created_at']));
         $stmt->execute();
     }
 
@@ -62,7 +62,7 @@ class CommentRepository
         $stmt->bindValue(':content', $comment->content);
         $stmt->bindValue(':author_id', $comment->author_id);
         $stmt->bindValue(':article_id', $comment->article_id);
-        $stmt->bindValue(':is_published', ($comment->is_published) ? 0 : 1);
+        $stmt->bindValue(':is_published', ($comment->is_published) ? 1 : 0);
         $stmt->bindValue(':created_at', date('Y-m-d H:i:s'));
         $stmt->bindValue(':username', Application::$session->get('username'));
         $stmt->execute();

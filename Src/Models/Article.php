@@ -8,7 +8,7 @@ class Article
 {
     private int $id;
     private int $author_id;
-    private int $categorty_id;
+    private int $category_id;
     private string $title;
     private string $chapo;
     private string $slug;
@@ -18,11 +18,11 @@ class Article
     private datetime $created_at;
     private datetime $updated_at;
 
-    public function __construct(int $id, int $author_id, int $categorty_id, string $title, string $chapo, string $slug, string $content, string $image, bool $is_published, string $updated_at)
+    public function __construct(int $id, int $author_id, int $category_id, string $title, string $chapo, string $slug, string $content, string $image, bool $is_published, string $updated_at)
     {
         $this->id = $id ?? 0;
         $this->author_id = $author_id;
-        $this->categorty_id = $categorty_id;
+        $this->category_id = $category_id;
         $this->title = $title;
         $this->chapo = $chapo;
         $this->slug = $slug;
@@ -74,21 +74,21 @@ class Article
     }
 
     /**
-     * Get the value of categorty_id
+     * Get the value of category_id
      */ 
-    public function getCategortyId()
+    public function getCategoryId()
     {
-        return $this->categorty_id;
+        return $this->category_id;
     }
 
     /**
-     * Set the value of categorty_id
+     * Set the value of category_id
      *
      * @return  self
      */ 
-    public function setCategortyId($categorty_id)
+    public function setCategoryId($category_id)
     {
-        $this->categorty_id = $categorty_id;
+        $this->category_id = $category_id;
 
         return $this;
     }
