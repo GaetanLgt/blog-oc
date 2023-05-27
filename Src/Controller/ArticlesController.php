@@ -51,7 +51,7 @@ class ArticlesController extends Controller
             // Récupérer les commentaires publiés (is_published = true
             $comments = $commentRepository->findAllPublishedByArticle($id);
         }
-        return $this->renderView('Articles/show.html.twig', [
+        return $this->twig->display('Articles/show.html.twig', [
             'article' => $article,
             'comments' => $comments,
             'author' => $author,
