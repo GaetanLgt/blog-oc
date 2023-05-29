@@ -118,7 +118,6 @@ class ArticlesController extends Controller
             $article->setChapo(trim($_POST['chapo']));
             $article->setImage(trim($_POST['image']));
             $article->setContent(trim($_POST['content']));
-            $article->setAuthorId(trim($_POST['author']));
             $article->setIsPublished(trim($_POST['is_published']) ?? false);
             $this->articleRepository->update();
             Application::$app->response->redirect('/articles');

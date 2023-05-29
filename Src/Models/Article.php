@@ -66,9 +66,9 @@ class Article
      *
      * @return  self
      */ 
-    public function setAuthorId($author_id)
+    public function setAuthorId($id)
     {
-        $this->author_id = $author_id;
+        $this->author_id = $id;
 
         return $this;
     }
