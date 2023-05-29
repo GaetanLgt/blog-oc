@@ -22,6 +22,7 @@
 									{% if session.username %}
 										{% if article.author_id == session.user_id or session.role == "admin" %}
 									<a href="/modifier?id={{ article.id }}" class="btn btn-sm btn-outline-primary">Edit</a>	
+									<a href="/supprimer?id={{ article.id }}" class="btn btn-sm btn-outline-danger">Delete</a>
 									{% endif %}
 									{% endif %}
 									
