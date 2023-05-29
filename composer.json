@@ -17,5 +17,8 @@
         "symfony/routing": "^6.2",
         "phpmailer/phpmailer": "^6.8"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "platform": {
+        "php": "8.1.0"
+    }
 }

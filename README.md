@@ -17,7 +17,7 @@ Ce projet est un blog réalisé dans le cadre de la formation de développeur d'
 
 Avant de pouvoir exécuter le projet, assurez-vous d'avoir les éléments suivants installés :
 
-- PHP 7.4 ou une version ultérieure
+- PHP 8.1 ou une version ultérieure
 - Symfony CLI
 - Composer
 - MySQL ou un autre système de gestion de base de données
@@ -43,8 +43,9 @@ composer install
 ```
 
 4. Configurez les paramètres de connexion à la base de données dans le fichier `.env`.
+copiez le fichier `.env` en `.env.local` et modifiez les paramètres de connexion à la base de données.
 
-5. Créez la base de données avec le fichier de migration Migrations/migate001.sql
+5. Créez la base de données avec le fichier de migration Migrations/migate001.sql à importer dans votre base de données.
 
 6. Lancez le serveur web :
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Exception;
 use App\Core\Request;
 use App\Core\Response;
 use App\Models\Article;
@@ -72,16 +73,41 @@ class ArticlesController extends Controller
         $categoriesRepository = new CategoryRepository();
         $categories = $categoriesRepository->findAll();
         $this->articleRepository = new ArticleRepository();
-
+            
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->articleRepository->create();
             if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-                $this->articleRepository->setImage();
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+                if (!in_array($extension, $allowedExtensions)) {
+                    throw new Exception('Le fichier doit être une image');
+                }
+                if ($_FILES['image']['size'] > 100000000) {
+                    throw new Exception('Le fichier ne doit pas dépasser 100Mo');
+                }
+                $filename = uniqid() . '.' . $extension;
+                move_uploaded_file($_FILES['image']['tmp_name'], 'Assets/uploads/' . $filename);
+                $_POST['image'] = $filename;
+            } else {
+                $_POST['image'] = '';
+            }
+            $category_id = intval(trim($_POST['category_id']));
+            $author_id = intval(trim($_POST['author_id']));
+            $categoryRepository = new CategoryRepository();
+            $authorRepository = new UserRepository();
+            $category = $categoryRepository->findById($category_id);
+            $author = $authorRepository->findById($author_id);
+            if (!$category) {
+                throw new Exception('La catégorie n\'existe pas');
+            }
+            if (!$author) {
+                throw new Exception('L\'auteur n\'existe pas');
             }
             if (isset($_POST['is_published']) && $_POST['is_published'] === true) {
                 $id = $this->articleRepository->getLastInsertedId();
                 $this->articleRepository->setIsPublished($id);
             }
+            $this->articleRepository->create();
+
             Application::$app->response->redirect('/articles');
         }
 

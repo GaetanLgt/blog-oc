@@ -58,40 +58,11 @@ class ArticleRepository
 
     public function create()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-                if (!in_array($extension, $allowedExtensions)) {
-                    throw new Exception('Le fichier doit être une image');
-                }
-                if ($_FILES['image']['size'] > 100000000) {
-                    throw new Exception('Le fichier ne doit pas dépasser 100Mo');
-                }
-                $filename = uniqid() . '.' . $extension;
-                move_uploaded_file($_FILES['image']['tmp_name'], 'Assets/uploads/' . $filename);
-                $_POST['image'] = $filename;
-            } else {
-                $_POST['image'] = '';
-            }
-            $category_id = intval(trim($_POST['category_id']));
-            $author_id = intval(trim($_POST['author_id']));
-            $categoryRepository = new CategoryRepository();
-            $authorRepository = new UserRepository();
-            $category = $categoryRepository->findById($category_id);
-            $author = $authorRepository->findById($author_id);
-            if (!$category) {
-                throw new Exception('La catégorie n\'existe pas');
-            }
-            if (!$author) {
-                throw new Exception('L\'auteur n\'existe pas');
-            }
-
             $db = Database::getInstance();
             $sql = "INSERT INTO article (author_id, category_id, title, chapo, slug, content, image, is_published, created_at, updated_at) VALUES (:author_id, :category_id, :title, :chapo, :slug, :content, :image, :is_published, :created_at, :updated_at)";
             $stmt = $db->prepare($sql);
-            $stmt->bindValue(':author_id', $author->getId());
-            $stmt->bindValue(':category_id', $category->getId());
+            $stmt->bindValue(':author_id', trim($_POST['author_id']));
+            $stmt->bindValue(':category_id', trim($_POST['category_id']));
             $stmt->bindValue(':title', trim($_POST['title']));
             $stmt->bindValue(':chapo', trim($_POST['chapo']));
             $stmt->bindValue(':slug', trim($_POST['slug']));
@@ -101,7 +72,6 @@ class ArticleRepository
             $stmt->bindValue(':created_at', date('Y-m-d H:i:s'));
             $stmt->bindValue(':updated_at', date('Y-m-d H:i:s'));
             $stmt->execute();
-        }
     }
 
     public function update(): void
