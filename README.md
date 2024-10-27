@@ -27,7 +27,7 @@ Avant de pouvoir exécuter le projet, assurez-vous d'avoir les éléments suivan
 1. Clonez ce dépôt sur votre machine locale :
 
 ```bash
-git clone https://github.com/votre-utilisateur/blog-openclassrooms.git
+git clone https://github.com/GaetanLgt/blog-openclassrooms.git
 ```
 
 2. Accédez au répertoire du projet :
